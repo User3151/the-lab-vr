@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 759bd051665f4bd41acb6ab2ce339fd4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - grabClip: {instanceID: 0}
+  - hitClip: {fileID: 8300000, guid: 7a503f57284acf6429fc36bd1f08ce72, type: 3}
+  - missClip: {instanceID: 0}
+  - burstPrefab: {fileID: 6419003984638751879, guid: f3ab2699f64367246b65b756856d124a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
