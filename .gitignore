@@ -107,3 +107,12 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# MediaPipe plugin - install separately, see README
+Packages/com.github.homuler.mediapipe/
+
+# Local leftovers, not part of the project
+.plastic/
+.vsconfig
+ignore.conf
+HANDOFF_TO_CODE.md
