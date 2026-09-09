@@ -1,4 +1,4 @@
-// Copyright (c) 2023 homuler
+﻿// Copyright (c) 2023 homuler
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
@@ -18,6 +18,9 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
     private Experimental.TextureFramePool _textureFramePool;
 
     public readonly HandLandmarkDetectionConfig config = new HandLandmarkDetectionConfig();
+
+    // מכריז החוצה על כל תוצאת זיהוי. הדוגמה לא ידעה על זה - אנחנו מוסיפים.
+    public static event System.Action<HandLandmarkerResult> OnResult;
 
     public override void Stop()
     {
@@ -154,6 +157,7 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
     private void OnHandLandmarkDetectionOutput(HandLandmarkerResult result, Image image, long timestamp)
     {
       _handLandmarkerResultAnnotationController.DrawLater(result);
+      OnResult?.Invoke(result);
     }
   }
 }
