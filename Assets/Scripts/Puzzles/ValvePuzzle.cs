@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-// חידה 2: לייצב את הלחץ.
+// משימת בטיחות: שטיפת האוויר בחנקן.
 // השסתום קובע לאן הלחץ שואף, אבל הלחץ מגיע לשם כמו קפיץ: סיבוב מהיר עובר את המטרה.
 // מעבר לקו האדום מפעיל אזעקה. צריך לסגור את השסתום עד הסוף ולנסות שוב, לאט יותר.
 public class ValvePuzzle : PuzzleStep
@@ -8,7 +9,9 @@ public class ValvePuzzle : PuzzleStep
     [Header("Parts")]
     [SerializeField] private ConstrainedDial valve;
     [SerializeField] private PressureGauge gauge;
-    [SerializeField] private Door hatch;
+
+    // מה קורה בעולם כשהלחץ יציב (בסצנה: מאוורר האוורור מתחיל להסתובב)
+    [SerializeField] private UnityEvent onStabilized;
 
     [Header("Target")]
     [SerializeField] private float greenMin = 0.6f;
@@ -73,7 +76,7 @@ public class ValvePuzzle : PuzzleStep
     protected override void OnSolved()
     {
         gauge.Show(pressure, true, false);
-        hatch.Open();
-        Debug.Log("Puzzle 2 solved: hatch open");
+        onStabilized.Invoke();
+        Debug.Log("Safety task solved: air purge stable");
     }
 }

@@ -1,0 +1,248 @@
+# The Lab — Game Brief
+
+A complete description of *The Lab*, a room-scale VR escape room, written so another designer or AI model can help develop ideas, redesign the space, and create art without breaking what already works.
+
+---
+
+## 1. At a glance
+
+| | |
+|---|---|
+| **Genre** | Single-room VR escape room, 10–15 minutes |
+| **Platform** | **PC VR for the recording: PSVR2 through the official PC adapter, via SteamVR/OpenXR.** The design still respects a Pico-class budget, because the employer's device runs on Pico |
+| **Engine** | Unity 6.3 LTS, Universal Render Pipeline (URP), XR Interaction Toolkit 3.3 |
+| **Player** | Standing, room-scale, two tracked controllers (hand tracking via webcam exists as an optional input layer) |
+| **Tone** | Light sci-fi, dry humor, grounded lab hardware |
+| **Why it exists** | Portfolio piece for an XR interaction developer role at a startup whose medical measurement device mounts on a Pico headset. It has to show precise, varied, physically believable hand interactions, plus a virtual guide character, which the employer requires. |
+| **Deliverable** | A gameplay video and the source repository |
+| **Current visual state** | Grey-box: Unity primitives and flat colors. All mechanics work; the art and layout are placeholders and are meant to be replaced. |
+
+**One-sentence pitch:** You wake up locked inside a research lab that sealed itself after an incident, and a sarcastic safety drone walks you through the safety checklist the lockdown system demands before it will let you out.
+
+---
+
+## 2. The story and the structure
+
+The player is inside **Lab 7**, a research lab that sealed itself after an unexplained "incident". The power is off, the room is dark, and the main door is locked by an automatic **lockdown**. The only thing still working is **D-7**, the lab's floating safety drone, who mostly worries about the incident report.
+
+**Why the door is locked — the spine of the design.** The lockdown system will not release the door until the lab is safe again. A terminal beside the door lists the safety criteria, and each one is a task in the room. This gives every puzzle the same, honest reason to exist: it is a real lab hazard that a real lab protocol would require you to clear.
+
+The shape of the game is therefore:
+
+1. **Power (forced first).** Without electricity there are no lights and no terminal. Replace the burnt fuse.
+2. **The safety checklist (four tasks, any order).** Fire, air, equipment, hazardous materials. The player chooses what to tackle and can move between tasks freely, like the task list in *Among Us*. The terminal tracks progress.
+3. **Exit (forced last).** With the checklist complete the lockdown lifts, the bolts unlock, and the manual door release can finally be pulled.
+
+**Design principle (a hard requirement):** the whole room is one connected situation. Every task must be something a real lab would actually require before declaring a room safe, and must visibly change the room. Nothing should feel like a random toy on a wall. Any new idea, prop, label or line of dialogue must support this.
+
+**The incident, told without exposition.** The centrifuge was loaded unbalanced. It shook itself apart, threw a tube, knocked sample vials across the room, and the electrical fault that followed burnt the fuse and started a small fire in the waste bin. Every task in the checklist is a consequence of the same accident, so the room explains itself. D-7 denies knowing anything about it.
+
+---
+
+## 3. The space (current grey-box layout)
+
+- **Room:** 8 m wide (X), 10 m deep (Z), ceiling 3.5 m. Floor at Y = 0.
+  - Walls are at X = ±4 and Z = ±5.
+  - North is +Z, south is −Z, east is +X, west is −X.
+- **Player start:** near the center-east, facing north.
+- **Beyond the door:** a short 2 × 3 m corridor floor. The escape "outside" is still undesigned.
+
+| Wall | What is there now |
+|---|---|
+| **North** | West side: a lab bench with the **centrifuge** and the loose fourth tube. Center: the 3-drawer **cabinet** (spare fuse). East side: the **cold storage fridge** for the sample vials |
+| **East** | The **fuse box** at chest height; the burning **waste bin** in front of the wall; further south a wall shelf with the **fire extinguisher** and one sample vial |
+| **West** | **Coolant/nitrogen station**: valve wheel, pressure gauge, and the vent fan above them that starts turning when the purge runs |
+| **South** | The **exit door** in the center, the two-handed **release lever** to its right, and the **lockdown terminal** to its left |
+| **Ceiling** | One ceiling lamp, off until power is restored |
+
+**Known layout problems.** These are the developer's own critique and the main thing to redesign:
+- The stations sit against bare walls with no lab context around them (no pipes, no cabling, no signage beyond one label each).
+- The room has no clutter or storytelling detail: nothing shows what the lab researched.
+- Everything is Unity primitives; silhouettes are readable but generic.
+
+---
+
+## 4. The tasks in detail
+
+### Step 1 — Restore power (drawer → fuse → fuse box)
+
+**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with an empty slot. A cabinet with three drawers.
+
+**Player does:** pulls the drawers open (each slides along one axis between fixed limits, contents riding inside), finds the fuse in the middle drawer, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
+
+**Rules:** the socket accepts **only** the fuse — anything else is ignored, with no highlight and no snapping.
+
+**Result:** the ceiling lamp fades on, and the lockdown terminal boots with the checklist showing four red rows.
+
+**Interactions shown:** constrained linear motion, carrying an object across the room, a keyed socket that validates what goes in.
+
+### The safety checklist — four tasks, any order
+
+The terminal by the door lists them. Each one solved turns its row green.
+
+#### Task A — Fire (extinguisher)
+
+**Player sees:** flames in a metal waste bin below the fuse box, lighting the dark room before power is even restored. A fire extinguisher sits on a wall shelf.
+
+**Player does:** picks up the extinguisher, points it at the flames and holds the trigger (XRI *activate*). The spray is a cone-shaped cast from the nozzle; the controller vibrates while spraying.
+
+**Rules:**
+- The fire needs about 2.5 seconds of continuous spray. Stop early and it grows back — partial effort does not count.
+- It can be put out before power is restored; the checklist simply marks it done when it opens.
+
+**Result:** the flames and their glow die out.
+
+**Interactions shown:** grab plus trigger-activate on a held tool, aiming, sustained effort, haptics.
+
+#### Task B — Air (nitrogen purge)
+
+**Player sees:** a round pressure gauge with a green band (60–70% of the scale) and a red zone (90% and up), a red valve wheel below it, and a vent fan above.
+
+**Player does:** turns the valve wheel by grabbing its rim and moving the hand around its center — up to 1.5 full turns from closed to open.
+
+**Mechanics (this is what makes it "sensitive"):**
+- The valve sets the *target* pressure; the actual pressure follows it like a damped spring, so **turning fast makes the needle overshoot**.
+- Crossing the red line trips an **alarm**: the status light blinks, the pressure vents to zero, and the valve does nothing until the player closes it fully and starts again.
+- The needle has to stay in the green band **continuously for 2 seconds**.
+
+**Result:** the vent fan spins up and the row goes green.
+
+**Interactions shown:** continuous rotary control over a multi-turn range, live visual feedback, a failure state with recovery, fine motor control.
+
+**Tuning values:** green band 0.6–0.7, red line 0.9, hold time 2 s, spring stiffness 20, damping 3.
+
+#### Task C — Equipment (balance the centrifuge)
+
+**Player sees:** a centrifuge on the bench, rattling against its own lid, its little display reading **IMBALANCE**. Three sample tubes sit in neighbouring slots of a six-slot rotor; a fourth tube lies on the bench where the machine threw it.
+
+**Player does:** lifts the lid (a hinge grabbed and swung like the valve is turned), rearranges the tubes so they sit in **opposite pairs**, drops the fourth tube in, and closes the lid.
+
+**Rules:**
+- All four tubes must be loaded, and the average position of the loaded tubes must sit on the spin axis — in practice, two opposite pairs.
+- Closing the lid on an unbalanced rotor makes it rattle again and re-display IMBALANCE.
+- With a correct load it locks the lid, spins up for a 3-second test run, spins down and reports **BALANCED**.
+
+**Result:** the row goes green, and the rattling that has been nagging the player since the lights came on finally stops.
+
+**Interactions shown:** a hinged lid, multiple keyed sockets, spatial reasoning about symmetry, machine state feedback on a diegetic display.
+
+#### Task D — Hazardous samples (cold storage)
+
+**Player sees:** three colored sample vials scattered around the room (on the cabinet, on the bench, on the shelf), and a cold storage fridge whose shelf has three color-marked slots. A red status light on the fridge.
+
+**Player does:** collects the vials, drops each into the slot marked with its color, and closes the fridge door (another grabbed hinge).
+
+**Rules:** a slot accepts only its own color. The task counts only when all three are in **and** the door is shut; when it is done the door locks and the light turns green.
+
+**Interactions shown:** search, sorting by a visual key, several validated sockets, a hinged door, a completion condition that spans multiple objects.
+
+### Step 3 — Open the door (two-handed lever)
+
+**Player sees:** the terminal switches to **LOCKDOWN LIFTED / MANUAL RELEASE ENABLED**, and the large lever right of the door becomes live.
+
+**Player does:** grabs the wide handle with **both hands at once** and pulls it down through about 80°.
+
+**Rules:**
+- One hand does nothing; the design reason is real — two-hand controls exist on industrial machinery so that neither hand can be in the mechanism.
+- Releasing mid-pull springs the lever back. At the bottom it locks.
+- A hand already holding something cannot grab the lever, so the player must put things down.
+- The lever is dead until the checklist is complete.
+
+**Result:** the door swings open over 2 seconds and the player walks out.
+
+**Interactions shown:** two-handed interaction, sustained effort, a spring-back failure state.
+
+---
+
+## 5. The guide: D-7
+
+**What it is:** a small floating lab drone with a single glowing cyan "eye", four rotors and a dark body. It has no face and no arms, which is a running joke. The eye flashes red during the pressure alarm.
+
+**Behavior:**
+- Hovers at the player's right, about a meter ahead, bobbing and turning to face them.
+- When it explains or hints, it **flies to the relevant object** for a few seconds, then returns.
+- Has no collision, so it never blocks the player or an interaction.
+- Speaks with a **subtitle above its body** that always faces the player, plus a **generated voice** (young male, slightly robotic).
+
+**Personality:** sarcastic but always helpful. It mocks the lab, the scientists, physics and the player's rushing, but every line contains a real clue. It is slightly guilty about the incident.
+
+**Dialogue logic (updated for parallel tasks):**
+- **Opening** and a **step intro** for power, for the checklist as a whole, and for the exit lever. The four checklist tasks have **no intros** — four introductions at once would be a lecture.
+- **Hints** are per task and escalate from gentle to direct. When several tasks are open, the coach hints on **whichever open task has received the fewest hints**, so every task gets its gentle nudge before any gets a blunt one. A hint arrives only after the coach has been silent for its idle time (40–60 s).
+- **Reactions:** dedicated lines for the pressure alarm.
+- **On each solve:** a short line, including for individual checklist tasks.
+- **Ending:** a goodbye as the door opens.
+
+**Voice status:** lines written for the original laser puzzle are gone. The lines for power, the valve hints, the lever and the ending still have their recorded clips; the new lines (checklist intro, fire, centrifuge, samples, per-task solves) are **text-only** until new clips are generated. Lines without a clip stay on screen based on their length, so the game is fully playable meanwhile.
+
+---
+
+## 6. Feedback and atmosphere (current)
+
+- **Lighting:** the room starts dark, lit only by the fire. The ceiling lamp fades on with power. Status lights: gauge (red/green, blinking on alarm) and fridge (red/green). The fire has its own flickering point light.
+- **Displays:** the lockdown terminal (checklist, rich-text colored rows) and the centrifuge's small status display.
+- **Sound:** only D-7's voice so far. No interaction sounds, ambience or music yet — the biggest remaining gap.
+- **Haptics:** the extinguisher pulses the controller while spraying. The valve and the lid do not yet.
+- **Materials:** flat grey walls with a few accent colors: red valve and extinguisher, dark metal, cream gauge face, white appliances, colored sample caps.
+- **World text:** one label per station ("N2 AIR PURGE", "FIRE EXTINGUISHER", "CENTRIFUGE", "COLD STORAGE - BIOHAZARD", "MANUAL DOOR RELEASE").
+
+---
+
+## 7. What can change freely, and what must stay
+
+The mechanics are built so the **layout and art can be redesigned without rewriting code**.
+
+**Free to change:**
+- Where each station stands, the room size and the wall layout.
+- Every model, material, prop and decoration.
+- All dialogue text and voice clips, and every hint timing.
+- Tuning values: valve difficulty, tube count, balance tolerance, spray time, lever angle.
+- Adding props, story details, labels, sound and lighting.
+- The order of the checklist rows, and which tasks are in it.
+
+**Must be preserved so the interactions keep working:**
+- **Drawer:** a single sliding axis with limits; the fuse rides inside it physically.
+- **Fuse / socket:** a one-handed object and a slot that visibly accepts only it.
+- **Valve:** a round wheel grabbable at the rim, rotating on one axis, plus a readable gauge with a target band and a danger zone.
+- **Extinguisher:** a grabbable body with a nozzle transform whose forward direction is the spray direction, and a fire that can be approached from a clear angle.
+- **Centrifuge:** a rotor with slots at **equal angles and equal radius** (the balance check is geometric), a lid that rotates on one axis, and one more tube than the loaded ones.
+- **Cold storage:** color-keyed slots and a door that rotates on one axis.
+- **Lever:** a handle wide enough for two hands (~60 cm) with room to stand in front of it.
+- **Door:** it sits in a real opening cut into the wall, so moving it means re-cutting the opening.
+- **Guide drone:** free air space around the player and near each point of interest.
+
+**Hard technical constraints for any art or layout ideas:**
+- **PC VR (PSVR2 over SteamVR) is what will be recorded**, so real-time lights, shadows and modest transparency are affordable. Keep models low-poly and the texture budget small anyway, so the project can honestly claim it was built to a Pico-class budget.
+- **XR setup:** OpenXR 1.18 with the OpenXR loader enabled for Windows and *Initialize XR on Startup* on; the Oculus Touch, Valve Index, HTC Vive and Khronos Simple controller profiles are enabled, because SteamVR remaps the PSVR2 Sense controllers onto one of them. The scene's `XR Interaction Simulator` object must be disabled when running on a real headset.
+- **Real-world scale.** Interaction heights roughly 0.9–1.7 m; nothing the player must touch above ~1.8 m or on the floor.
+- **Comfort.** No forced camera motion, no full-view flashing, enough clear floor to move.
+- **Readability in VR.** Clear silhouettes, contrast, and interactables that look grabbable.
+
+---
+
+## 8. Open design questions (good places to ask for ideas)
+
+1. **Art direction:** clean high-tech medical lab, retro-industrial research facility, or abandoned after the incident?
+2. **Diegetic staging:** a real electrical panel instead of a lone box; pipes feeding the valve; a proper lab bench with equipment around the centrifuge; a fume hood; cable runs to the terminal.
+3. **Room layout:** how to arrange the stations so the player naturally sweeps the whole room and always sees a next goal, now that four tasks are open at once.
+4. **Sound design:** ambience that changes as systems come online (hum after power, fan after the purge, the centrifuge rattle stopping), interaction sounds (drawer, fuse click, valve squeak, extinguisher hiss, lid clunk, lever strain, bolts releasing), and the alarm.
+5. **Moments of payoff:** how each solved task can transform the room visibly — monitors booting, steam, the fan, warning lights turning green, the bolts retracting.
+6. **The ending:** what lies beyond the door, and whether D-7 gets a last beat (it cannot leave Lab 7).
+7. **Optional additions** that fit the checklist without breaking it: a torn maintenance page about the valve, a rota sheet naming whoever loaded the centrifuge, a UV filter on a flashlight that reveals markings.
+
+---
+
+## 9. Technical summary (for model context)
+
+- **Puzzle flow:** `PuzzleSequencer` runs a linear list of `PuzzleStep`s: power → safety checklist → exit lever. The checklist is a `PuzzleGroup`, itself a step, which activates its four tasks together and solves when all of them are solved. A step ignores the player until it is active, so nothing can be solved out of order — but the four tasks inside the group are all active at once.
+- **Announcements:** `PuzzleStep` raises static `AnyActivated` / `AnySolved` events, so the coach and the terminal follow every step, including tasks nested in a group, without referencing any of them.
+- **Loose coupling:** interactive objects announce events ("filled", "pulled", "extinguished", "alarm") or expose a value (valve position, dial angle). Puzzle controllers turn those into rules. Nothing references anything else directly, so any piece can be restyled or moved.
+- **Custom interaction components** (on top of XR Interaction Toolkit):
+  - Constrained slider (drawer).
+  - Validated socket + socket key (fuse box, centrifuge slots, fridge slots).
+  - Constrained dial with optional click detents (valve, centrifuge lid, fridge door).
+  - Two-handed lever.
+  - Fire extinguisher (grab + activate + cone cast + haptics) and a fire that can be doused or regrow.
+  - Spinner (vent fan, centrifuge rotor) and a door/hatch hinge.
+- **Displays:** `LockdownTerminal` renders the checklist from the group's task list and their display names; the centrifuge writes its own status text.
+- **The guide:** follow and point-of-interest movement, a speech queue with subtitles and audio, and a director that holds the per-step script and spreads hints across whatever tasks are open.

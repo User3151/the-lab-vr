@@ -1,20 +1,26 @@
 using UnityEngine;
 
 // הגוף של המנחה: רחפן שמרחף ליד השחקן, מסתכל עליו, ועף להצביע על נקודות עניין.
-// אין לו Collider: הוא לא חוסם את השחקן, את קרן הלייזר או תפיסה של חפצים.
+// אין לו Collider: הוא לא חוסם את השחקן ולא תפיסה של חפצים.
+// במקום Collider, הוא בודק בעצמו שהמקום שהוא עף אליו פנוי.
 public class CoachDrone : MonoBehaviour
 {
     [SerializeField] private Transform head;            // המצלמה של השחקן
 
     [Header("Follow")]
-    [SerializeField] private float sideOffset = 0.55f;  // ימינה מהשחקן
-    [SerializeField] private float heightOffset = 0.05f;
-    [SerializeField] private float forwardOffset = 1.1f;
+    [SerializeField] private float sideOffset = 0.75f;  // ימינה מהשחקן
+    [SerializeField] private float heightOffset = 0.12f;
+    [SerializeField] private float forwardOffset = 1.45f;
     [SerializeField] private float smoothTime = 0.6f;
 
     [Header("Point of interest")]
     [SerializeField] private float distanceFromFocus = 0.7f;   // כמה קרוב לנקודה, בצד של השחקן
     [SerializeField] private float heightAboveFocus = 0.3f;
+
+    [Header("Obstacles")]
+    [SerializeField] private LayerMask obstacleMask = ~0;      // מה נחשב מכשול
+    [SerializeField] private float clearanceRadius = 0.18f;    // חצי הרוחב של הרחפן
+    [SerializeField] private float minDistanceFromHead = 0.5f; // גם כשצפוף, הוא לא נכנס לפנים שלך
 
     [Header("Hover")]
     [SerializeField] private float bobAmplitude = 0.03f;
@@ -58,6 +64,9 @@ public class CoachDrone : MonoBehaviour
         Vector3 target = focusing ? FocusPosition() : FollowPosition();
         target.y += Mathf.Sin(Time.time * Mathf.PI * 2f * bobFrequency) * bobAmplitude;
 
+        // המקום המבוקש עלול להיות בתוך קיר. מקצרים אותו עד למקום הפנוי הקרוב ביותר.
+        target = PullOutOfObstacles(target);
+
         transform.position = Vector3.SmoothDamp(transform.position, target, ref velocity, smoothTime);
 
         // מסתכל על מה שהוא מראה, או על השחקן
@@ -84,5 +93,25 @@ public class CoachDrone : MonoBehaviour
     {
         Vector3 toPlayer = Vector3.ProjectOnPlane(head.position - focus.position, Vector3.up).normalized;
         return focus.position + toPlayer * distanceFromFocus + Vector3.up * heightAboveFocus;
+    }
+
+    // הקו מהראש של השחקן אל המקום המבוקש הוא קו ראייה: אם הוא חוסם, אין טעם לעוף לשם.
+    // SphereCast ולא Raycast, כדי שגוף הרחפן כולו יישאר בצד הפנוי של הקיר.
+    // Trigger מתעלמים ממנו: השקעים בחדר הם Trigger, והם לא מכשול.
+    private Vector3 PullOutOfObstacles(Vector3 target)
+    {
+        Vector3 fromHead = target - head.position;
+        float distance = fromHead.magnitude;
+        if (distance < 0.001f) return target;
+
+        Vector3 direction = fromHead / distance;
+
+        if (!Physics.SphereCast(head.position, clearanceRadius, direction, out RaycastHit hit,
+                distance, obstacleMask, QueryTriggerInteraction.Ignore))
+            return target;
+
+        // נעצרים לפני המכשול, אבל לא מתקרבים לשחקן מדי
+        float allowed = Mathf.Max(minDistanceFromHead, hit.distance - clearanceRadius);
+        return head.position + direction * allowed;
     }
 }

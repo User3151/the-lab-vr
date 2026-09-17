@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-// המוח של המנחה: מאזין לרצף החידות ומחליט מה להגיד ומתי.
+// המוח של המנחה: מאזין לצעדים בחדר ומחליט מה להגיד ומתי.
 // הוא לא מכיר אף חידה בקוד. כל הטקסטים, הרמזים ונקודות העניין מוגדרים ב-Inspector לכל צעד.
+// כמה צעדים יכולים להיות פעילים יחד (רשימת הבדיקות), ולכן הרמזים מתחלקים ביניהם.
 public class CoachDirector : MonoBehaviour
 {
     [System.Serializable]
@@ -17,9 +19,11 @@ public class CoachDirector : MonoBehaviour
     {
         public PuzzleStep step;
         public Transform focus;
-        public CoachLine[] intro;
+        public CoachLine[] intro;              // למשימות שנפתחות יחד עדיף להשאיר ריק, אחרת הוא ידבר ברצף
         public Hint[] hints;                   // מסודרים מהעדין לישיר
         public CoachLine[] solved;
+
+        [System.NonSerialized] public int nextHint;
     }
 
     [SerializeField] private CoachSpeech speech;
@@ -35,8 +39,7 @@ public class CoachDirector : MonoBehaviour
     [SerializeField] private CoachLine[] pressureAlarm;
     [SerializeField] private float reactionCooldown = 8f;
 
-    private StepCoaching current;
-    private int nextHint;
+    private readonly List<StepCoaching> active = new();
     private float idleSeconds;
     private bool openingSaid;
     private float lastReactionTime = float.NegativeInfinity;
@@ -44,16 +47,16 @@ public class CoachDirector : MonoBehaviour
 
     private void OnEnable()
     {
-        PuzzleSequencer.OnStepStarted += HandleStepStarted;
-        PuzzleSequencer.OnStepSolved += HandleStepSolved;
+        PuzzleStep.AnyActivated += HandleStepStarted;
+        PuzzleStep.AnySolved += HandleStepSolved;
         PuzzleSequencer.OnAllSolved += HandleAllSolved;
         ValvePuzzle.OnAlarm += HandlePressureAlarm;
     }
 
     private void OnDisable()
     {
-        PuzzleSequencer.OnStepStarted -= HandleStepStarted;
-        PuzzleSequencer.OnStepSolved -= HandleStepSolved;
+        PuzzleStep.AnyActivated -= HandleStepStarted;
+        PuzzleStep.AnySolved -= HandleStepSolved;
         PuzzleSequencer.OnAllSolved -= HandleAllSolved;
         ValvePuzzle.OnAlarm -= HandlePressureAlarm;
     }
@@ -72,20 +75,28 @@ public class CoachDirector : MonoBehaviour
     {
         SayOpeningOnce();
 
-        current = FindCoaching(step);
-        nextHint = 0;
-        idleSeconds = 0f;
-        if (current == null) return;
+        StepCoaching coaching = FindCoaching(step);
+        if (coaching == null) return;
 
-        speech.Say(current.intro);
-        drone.FocusOn(current.focus, focusSeconds);
+        coaching.nextHint = 0;
+        active.Add(coaching);
+        idleSeconds = 0f;
+
+        if (coaching.intro == null || coaching.intro.Length == 0) return;
+        speech.Say(coaching.intro);
+        drone.FocusOn(coaching.focus, focusSeconds);
     }
 
     private void HandleStepSolved(PuzzleStep step)
     {
-        StepCoaching solved = FindCoaching(step);
-        if (solved != null) speech.Say(solved.solved);
-        current = null;
+        StepCoaching coaching = FindCoaching(step);
+        if (coaching == null) return;
+
+        active.Remove(coaching);
+        speech.Say(coaching.solved);
+
+        // השחקן התקדם: מתחילים לספור מחדש לפני הרמז הבא
+        idleSeconds = 0f;
     }
 
     private void HandleAllSolved() => speech.Say(ending);
@@ -107,18 +118,31 @@ public class CoachDirector : MonoBehaviour
     // רמזים מדורגים: הזמן נספר רק כשהמנחה שותק, כדי שלא ידבר ברצף
     private void Update()
     {
-        if (current == null || current.hints == null || nextHint >= current.hints.Length) return;
-        if (speech.IsSpeaking) return;
+        StepCoaching target = NextToHint();
+        if (target == null || speech.IsSpeaking) return;
 
         idleSeconds += Time.deltaTime;
 
-        Hint hint = current.hints[nextHint];
+        Hint hint = target.hints[target.nextHint];
         if (idleSeconds < hint.afterIdleSeconds) return;
 
         speech.Say(hint.line);
-        drone.FocusOn(hint.focus != null ? hint.focus : current.focus, focusSeconds);
-        nextHint++;
+        drone.FocusOn(hint.focus != null ? hint.focus : target.focus, focusSeconds);
+        target.nextHint++;
         idleSeconds = 0f;   // הרמז הבא נמדד מסוף הרמז הזה
+    }
+
+    // בין כל הצעדים הפעילים, זה שקיבל הכי מעט רמזים. כך כל משימה מקבלת קודם את הרמז העדין שלה,
+    // ורק אחר כך מגיעים הרמזים הישירים. בשוויון, לפי הסדר ב-Inspector.
+    private StepCoaching NextToHint()
+    {
+        StepCoaching best = null;
+        foreach (StepCoaching coaching in active)
+        {
+            if (coaching.hints == null || coaching.nextHint >= coaching.hints.Length) continue;
+            if (best == null || coaching.nextHint < best.nextHint) best = coaching;
+        }
+        return best;
     }
 
     private StepCoaching FindCoaching(PuzzleStep step)
