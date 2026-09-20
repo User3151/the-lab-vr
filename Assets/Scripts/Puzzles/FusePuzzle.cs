@@ -1,44 +1,38 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
-// חידה 1: הנתיך נכנס לשקע, והאור חוזר לחדר.
-// הבקר מכיר את השקע ואת האור. השקע לא מכיר אף אחד מהם.
+// שלב 1: מוציאים את הפיוז השרוף, מכניסים פיוז תקין, והחשמל חוזר.
+// החידה מכירה רק את השקע. מה שקורה כשהחשמל חוזר (התאורה) מחובר בסצנה.
 public class FusePuzzle : PuzzleStep
 {
     [Header("Input")]
     [SerializeField] private ValidatedSocket fuseSocket;
 
-    [Header("Lights")]
-    [SerializeField] private Light roomLight;
-    [SerializeField] private float litIntensity = 1f;
-    [SerializeField] private float fadeSeconds = 1.5f;
+    // מה קורה בחדר כשהחשמל חוזר (בסצנה: LabLighting.PowerOn)
+    [SerializeField] private UnityEvent onPowerRestored;
 
     // אירוע static חי יותר זמן מהאובייקט, ובלי ניתוק הוא ימשיך לקרוא לאובייקט שנמחק.
     private void OnEnable()  => ValidatedSocket.OnFilled += HandleFilled;
     private void OnDisable() => ValidatedSocket.OnFilled -= HandleFilled;
 
-    private void HandleFilled(ValidatedSocket socket)
+    private void HandleFilled(ValidatedSocket socket, Transform inserted)
     {
         // האירוע משותף לכל השקעים בחדר, אז מגיבים רק לשקע שלנו
         if (socket != fuseSocket) return;
+
+        // פיוז שרוף נכנס פיזית לשקע בלי להעביר חשמל. אין אור, ואין פתרון.
+        if (!inserted.TryGetComponent(out Fuse fuse) || fuse.IsBurnt)
+        {
+            Debug.Log("Dead fuse in the socket: no power");
+            return;
+        }
+
         Solve();
     }
 
     protected override void OnSolved()
     {
-        StartCoroutine(FadeLightIn());
-        Debug.Log("Puzzle 1 solved: lights on");
-    }
-
-    // האור עולה בהדרגה ולא נדלק בבת אחת. בסרטון זה נראה הרבה יותר טוב.
-    private IEnumerator FadeLightIn()
-    {
-        float start = roomLight.intensity;
-        for (float t = 0f; t < fadeSeconds; t += Time.deltaTime)
-        {
-            roomLight.intensity = Mathf.Lerp(start, litIntensity, t / fadeSeconds);
-            yield return null;
-        }
-        roomLight.intensity = litIntensity;
+        onPowerRestored.Invoke();
+        Debug.Log("Power restored");
     }
 }

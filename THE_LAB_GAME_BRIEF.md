@@ -53,12 +53,12 @@ The shape of the game is therefore:
 | **East** | The **fuse box** at chest height; the burning **waste bin** in front of the wall; further south a wall shelf with the **fire extinguisher** and one sample vial |
 | **West** | **Coolant/nitrogen station**: valve wheel, pressure gauge, and the vent fan above them that starts turning when the purge runs |
 | **South** | The **exit door** in the center, the two-handed **release lever** to its right, and the **lockdown terminal** to its left |
-| **Ceiling** | One ceiling lamp, off until power is restored |
+| **Ceiling** | Five fluorescent fixtures; the room lamp sits in the center one and is off until power is restored |
+| **Set dressing** | An island bench (microscope, laptop, glassware, tube rack, paperwork), stools — one knocked over beside the centrifuge with papers scattered around it — book shelving, a whiteboard covered in notes, a monitor desk, conduit running along the walls to the fuse box and the gas station, crates, and signage (LAB 7, EXIT, BIOHAZARD, a safety poster). None of it is interactive |
 
 **Known layout problems.** These are the developer's own critique and the main thing to redesign:
-- The stations sit against bare walls with no lab context around them (no pipes, no cabling, no signage beyond one label each).
-- The room has no clutter or storytelling detail: nothing shows what the lab researched.
 - Everything is Unity primitives; silhouettes are readable but generic.
+- The dressing still does not say what the lab actually researched.
 
 ---
 
@@ -66,11 +66,13 @@ The shape of the game is therefore:
 
 ### Step 1 — Restore power (drawer → fuse → fuse box)
 
-**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with an empty slot. A cabinet with three drawers.
+**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with a **blackened, burnt-out fuse still in its socket**. A cabinet with three drawers.
 
-**Player does:** pulls the drawers open (each slides along one axis between fixed limits, contents riding inside), finds the fuse in the middle drawer, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
+**Player does:** pulls the dead fuse out of the socket, opens the drawers (each slides along one axis between fixed limits, contents riding inside), finds the spare fuse in the middle drawer, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
 
-**Rules:** the socket accepts **only** the fuse — anything else is ignored, with no highlight and no snapping.
+**Rules:**
+- The socket accepts **any fuse** — including the burnt one — and nothing else. A socket cannot tell a dead fuse from a live one, so putting the burnt one back is allowed and simply does nothing. The puzzle, not the socket, checks whether the fuse works.
+- Only one fuse fits at a time, so the old one has to come out first.
 
 **Result:** the ceiling lamp fades on, and the lockdown terminal boots with the checklist showing four red rows.
 
@@ -79,6 +81,8 @@ The shape of the game is therefore:
 ### The safety checklist — four tasks, any order
 
 The terminal by the door lists them. Each one solved turns its row green.
+
+**The player can read the list from anywhere.** Pressing the primary button on either controller (X/A), or `3` on the keyboard in the simulator, brings up a floating panel about half a metre in front of the eyes showing exactly what the terminal shows; pressing again dismisses it. The panel is a remote feed of the terminal, not a second list, so there is only one place in the code that renders the checklist — and before power is restored it reads `NO SIGNAL`, because the terminal is dead.
 
 #### Task A — Fire (extinguisher)
 
@@ -159,9 +163,10 @@ The terminal by the door lists them. Each one solved turns its row green.
 **What it is:** a small floating lab drone with a single glowing cyan "eye", four rotors and a dark body. It has no face and no arms, which is a running joke. The eye flashes red during the pressure alarm.
 
 **Behavior:**
-- Hovers at the player's right, about a meter ahead, bobbing and turning to face them.
+- Hovers at the player's right, about a metre and a half ahead, bobbing and turning to face them.
 - When it explains or hints, it **flies to the relevant object** for a few seconds, then returns.
-- Has no collision, so it never blocks the player or an interaction.
+- Has no collision, so it never blocks the player or an interaction. Instead it casts a sphere from the player's head toward wherever it wants to hover, and stops short of whatever blocks it, so it cannot slide into a wall or a bench.
+- Its eye is a dim short-range light plus an emissive material, not a lamp: a bright light that close to the face is painful in a headset.
 - Speaks with a **subtitle above its body** that always faces the player, plus a **generated voice** (young male, slightly robotic).
 
 **Personality:** sarcastic but always helpful. It mocks the lab, the scientists, physics and the player's rushing, but every line contains a real clue. It is slightly guilty about the incident.
@@ -179,7 +184,7 @@ The terminal by the door lists them. Each one solved turns its row green.
 
 ## 6. Feedback and atmosphere (current)
 
-- **Lighting:** the room starts dark, lit only by the fire. The ceiling lamp fades on with power. Status lights: gauge (red/green, blinking on alarm) and fridge (red/green). The fire has its own flickering point light.
+- **Lighting:** the room starts in near-black ambient, lit by four dim red emergency lamps (one per wall) and the fire. When the good fuse goes in, the emergency lamps cut out, half a second of total darkness follows, and then the five ceiling fixtures switch on one at a time — nearest the fuse box first, as if power were running along the conduit — each flickering twice like a real fluorescent tube before it stays lit, while the ambient level rises. All of this lives in `LabLighting`; `FusePuzzle` only raises `onPowerRestored`. Status lights: gauge (red/green, blinking on alarm) and fridge (red/green). The fire has its own flickering point light.
 - **Displays:** the lockdown terminal (checklist, rich-text colored rows) and the centrifuge's small status display.
 - **Sound:** only D-7's voice so far. No interaction sounds, ambience or music yet — the biggest remaining gap.
 - **Haptics:** the extinguisher pulses the controller while spraying. The valve and the lid do not yet.
@@ -239,10 +244,10 @@ The mechanics are built so the **layout and art can be redesigned without rewrit
 - **Loose coupling:** interactive objects announce events ("filled", "pulled", "extinguished", "alarm") or expose a value (valve position, dial angle). Puzzle controllers turn those into rules. Nothing references anything else directly, so any piece can be restyled or moved.
 - **Custom interaction components** (on top of XR Interaction Toolkit):
   - Constrained slider (drawer).
-  - Validated socket + socket key (fuse box, centrifuge slots, fridge slots).
+  - Validated socket + socket key (fuse box, centrifuge slots, fridge slots). It announces **every** accepted insertion together with what went in, so a listener can decide whether that particular object counts — which is how the burnt fuse fits the socket without restoring power (`Fuse.IsBurnt`).
   - Constrained dial with optional click detents (valve, centrifuge lid, fridge door).
   - Two-handed lever.
   - Fire extinguisher (grab + activate + cone cast + haptics) and a fire that can be doused or regrow.
   - Spinner (vent fan, centrifuge rotor) and a door/hatch hinge.
-- **Displays:** `LockdownTerminal` renders the checklist from the group's task list and their display names; the centrifuge writes its own status text.
+- **Displays:** `LockdownTerminal` renders the checklist from the group's task list and their display names, and publishes that text; `ChecklistPanel` is a head-following panel that subscribes to it and toggles on an input action built in code (controller primary button, or `3`), so no Input Actions asset needs editing. The centrifuge writes its own status text.
 - **The guide:** follow and point-of-interest movement, a speech queue with subtitles and audio, and a director that holds the per-step script and spreads hints across whatever tasks are open.

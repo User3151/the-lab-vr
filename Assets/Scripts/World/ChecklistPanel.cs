@@ -28,7 +28,7 @@ public class ChecklistPanel : MonoBehaviour
         toggleAction = new InputAction("ToggleChecklist", InputActionType.Button);
         toggleAction.AddBinding("<XRController>{LeftHand}/primaryButton");
         toggleAction.AddBinding("<XRController>{RightHand}/primaryButton");
-        toggleAction.AddBinding("<Keyboard>/tab");
+        toggleAction.AddBinding("<Keyboard>/3");
 
         panel.SetActive(false);
     }

@@ -10,10 +10,9 @@ public class ValidatedSocket : XRSocketInteractor
     [Header("Validation")]
     [SerializeField] private string requiredKeyId = "fuse";
 
-    // מכריז כשהחפץ הנכון נכנס. הפאזל יאזין לזה ולא יצטרך להכיר את השקע.
-    public static event System.Action<ValidatedSocket> OnFilled;
-
-    private bool reportedFilled;
+    // מכריז בכל פעם שחפץ מתאים נכנס, ומוסיף מה נכנס.
+    // מי שמקשיב מחליט אם זה החפץ שהוא חיכה לו: השקע לא יודע מה נחשב "נכון" בחידה.
+    public static event System.Action<ValidatedSocket, Transform> OnFilled;
 
     // Hover: בלי הבדיקה, השקע היה מציג תצוגה מקדימה לכל חפץ שמתקרב, גם כזה שלא ייכנס
     public override bool CanHover(IXRHoverInteractable interactable)
@@ -31,10 +30,7 @@ public class ValidatedSocket : XRSocketInteractor
     {
         base.OnSelectEntered(args);
 
-        if (reportedFilled) return;
-        reportedFilled = true;
-
-        OnFilled?.Invoke(this);
+        OnFilled?.Invoke(this, args.interactableObject.transform);
         Debug.Log($"{name} accepted {args.interactableObject.transform.name}");
     }
 
