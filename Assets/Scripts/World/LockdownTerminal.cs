@@ -17,16 +17,19 @@ public class LockdownTerminal : MonoBehaviour
     // מכריז בכל פעם שהטקסט משתנה. הלוח הנייד מאזין לזה.
     public event System.Action<string> ReportChanged;
 
+    // שלושה רגעים משנים את הרשימה: צעד נפתח, צעד נפתר, וצעד שנפתר התקלקל בחזרה
     private void OnEnable()
     {
         PuzzleStep.AnyActivated += HandleStepChanged;
         PuzzleStep.AnySolved += HandleStepChanged;
+        PuzzleStep.AnyUnsolved += HandleStepChanged;
     }
 
     private void OnDisable()
     {
         PuzzleStep.AnyActivated -= HandleStepChanged;
         PuzzleStep.AnySolved -= HandleStepChanged;
+        PuzzleStep.AnyUnsolved -= HandleStepChanged;
     }
 
     private void Start() => Refresh();

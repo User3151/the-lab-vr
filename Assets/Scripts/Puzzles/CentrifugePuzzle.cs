@@ -4,6 +4,7 @@ using UnityEngine;
 // משימת בטיחות: לאזן את הצנטריפוגה.
 // צנטריפוגה עם מבחנות לא מאוזנות רועדת ועלולה להישבר. צריך לפתוח את המכסה, לסדר את המבחנות
 // כך שמרכז המסה שלהן יהיה בציר, ולסגור. אם הסידור מאוזן, היא מסתובבת חלק ונעצרת, והמשימה נפתרת.
+// אחרי הפתרון מותר לפתוח את המכסה, אבל שיבוש האיזון מחזיר את המשימה לאדום.
 public class CentrifugePuzzle : PuzzleStep
 {
     [Header("Parts")]
@@ -34,6 +35,14 @@ public class CentrifugePuzzle : PuzzleStep
     private void Update()
     {
         if (!IsActive) return;
+
+        // נפתרה: נשארת פתורה כל עוד המבחנות מאוזנות, גם עם מכסה פתוח.
+        // מבחנה שהוצאה או הוזזה לסידור לא מאוזן מחזירה את המשימה לאדום.
+        if (IsSolved)
+        {
+            if (!IsBalanced()) Unsolve();
+            return;
+        }
 
         // הריצה המאוזנת כבר התחילה: מחכים שתסתיים ואז נפתרים
         if (spinEndTime >= 0f)
@@ -98,7 +107,11 @@ public class CentrifugePuzzle : PuzzleStep
     {
         rotor.StopSpinning();
         lid.enabled = true;
+        spinEndTime = -1f;   // הריצה הסתיימה. ריצה חדשה תתחיל רק אחרי שהאיזון ישובש ויתוקן.
         display.text = "<color=#3DDC84>BALANCED</color>\nSAFE";
         Debug.Log("Safety task solved: centrifuge balanced");
     }
+
+    // התצוגה לא מתעדכנת כאן: הלולאה ב-Update תציג כבר בפריים הבא LID OPEN או IMBALANCE
+    protected override void OnUnsolved() => Debug.Log("Safety task broken: centrifuge out of balance");
 }

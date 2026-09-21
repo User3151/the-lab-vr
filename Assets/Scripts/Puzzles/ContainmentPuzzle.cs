@@ -2,6 +2,7 @@ using UnityEngine;
 
 // משימת בטיחות: להחזיר את הדגימות המסוכנות לאחסון הקירור ולסגור את הדלת.
 // כל שקע מקבל רק את הדגימה בצבע שלו (דרך SocketKey), כך שהמיון הוא חלק מהמשימה.
+// ההסגר הוא מצב: פתיחת הדלת או הוצאת דגימה מחזירות את המשימה לאדום.
 public class ContainmentPuzzle : PuzzleStep
 {
     [Header("Parts")]
@@ -23,22 +24,36 @@ public class ContainmentPuzzle : PuzzleStep
         statusLight.enabled = true;
     }
 
-    // "הכול בפנים והדלת סגורה" הוא מצב ולא רגע, אז דוגמים אותו בכל פריים
+    // "הכול בפנים והדלת סגורה" הוא מצב ולא רגע, אז דוגמים אותו בכל פריים,
+    // גם אחרי הפתרון, כדי לתפוס את הרגע שבו הוא מפסיק להתקיים
     private void Update()
     {
         if (!IsActive) return;
-        if (fridgeDoor.Value > doorClosedBelow) return;
+
+        bool contained = IsContained();
+        if (contained && !IsSolved) Solve();
+        else if (!contained && IsSolved) Unsolve();
+    }
+
+    private bool IsContained()
+    {
+        if (fridgeDoor.Value > doorClosedBelow) return false;
 
         foreach (ValidatedSocket slot in slots)
-            if (!slot.hasSelection) return;
+            if (!slot.hasSelection) return false;
 
-        Solve();
+        return true;
     }
 
     protected override void OnSolved()
     {
         statusLight.color = safeColor;
-        fridgeDoor.enabled = false;   // הדלת ננעלת: הדגימות בהסגר
         Debug.Log("Safety task solved: samples contained");
+    }
+
+    protected override void OnUnsolved()
+    {
+        statusLight.color = unsafeColor;
+        Debug.Log("Safety task broken: containment open");
     }
 }

@@ -49,16 +49,22 @@ The shape of the game is therefore:
 
 | Wall | What is there now |
 |---|---|
-| **North** | West side: a lab bench with the **centrifuge** and the loose fourth tube. Center: the 3-drawer **cabinet** (spare fuse). East side: the **cold storage fridge** for the sample vials |
-| **East** | The **fuse box** at chest height; the burning **waste bin** in front of the wall; further south a wall shelf with the **fire extinguisher** and one sample vial |
+| **North** | West side: a lab bench with the **centrifuge** and the loose fourth tube. East side: the **cold storage fridge** for the sample vials |
+| **East** | The **fuse box** at chest height; the **office desk**, whose top drawer slides open and holds the spare fuse; the burning **waste bin** in front of the wall; further south a wall shelf with the **fire extinguisher** and one sample vial |
 | **West** | **Coolant/nitrogen station**: valve wheel, pressure gauge, and the vent fan above them that starts turning when the purge runs |
 | **South** | The **exit door** in the center, the two-handed **release lever** to its right, and the **lockdown terminal** to its left |
 | **Ceiling** | Five fluorescent fixtures; the room lamp sits in the center one and is off until power is restored |
-| **Set dressing** | An island bench (microscope, laptop, glassware, tube rack, paperwork), stools — one knocked over beside the centrifuge with papers scattered around it — book shelving, a whiteboard covered in notes, a monitor desk, conduit running along the walls to the fuse box and the gas station, crates, and signage (LAB 7, EXIT, BIOHAZARD, a safety poster). None of it is interactive |
+| **Set dressing** | A lab bench with a sink (microscope, laptop, glassware, tube rack, paperwork, mug), three lab stools — one knocked over beside the centrifuge with papers scattered around it — book shelving packed with journals, a rolling whiteboard by the exit, a monitor desk, conduit running along the walls to the fuse box and the gas station, crates, and signage (LAB 7, EXIT, BIOHAZARD, a safety poster). None of it is interactive |
+
+**Art pass.** The grey-box primitives have been replaced by real models wherever one
+could be sourced under CC0 or CC BY — see `CREDITS.md`, which the public repository
+depends on. Everything else (mugs, glassware, whiteboard handwriting, signage) is still
+built from primitives, and reads well enough at VR distance.
 
 **Known layout problems.** These are the developer's own critique and the main thing to redesign:
-- Everything is Unity primitives; silhouettes are readable but generic.
 - The dressing still does not say what the lab actually researched.
+- The floor in the middle of the room is bare; the lab reads as tidier than a lockdown should look.
+- Two of D-7's step-1 voice clips were recorded for the old cabinet and are unused; those lines need re-recording.
 
 ---
 
@@ -66,9 +72,9 @@ The shape of the game is therefore:
 
 ### Step 1 — Restore power (drawer → fuse → fuse box)
 
-**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with a **blackened, burnt-out fuse still in its socket**. A cabinet with three drawers.
+**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with a **blackened, burnt-out fuse still in its socket**. An office desk against the same wall, its drawers shut.
 
-**Player does:** pulls the dead fuse out of the socket, opens the drawers (each slides along one axis between fixed limits, contents riding inside), finds the spare fuse in the middle drawer, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
+**Player does:** pulls the dead fuse out of the socket, pulls open the desk's top drawer (it slides along one axis between fixed limits), finds the spare fuse lying inside, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
 
 **Rules:**
 - The socket accepts **any fuse** — including the burnt one — and nothing else. A socket cannot tell a dead fuse from a live one, so putting the burnt one back is allowed and simply does nothing. The puzzle, not the socket, checks whether the fuse works.
@@ -81,6 +87,8 @@ The shape of the game is therefore:
 ### The safety checklist — four tasks, any order
 
 The terminal by the door lists them. Each one solved turns its row green.
+
+**The checklist is live, not a record.** A solved task keeps watching its own condition: turn the valve out of the green band, pull a tube out of the balanced centrifuge or open the fridge door, and that row goes red again. If the whole list had already gone green, the lockdown re-engages: the terminal returns to DOOR SEALED and the lever loses power until the list is green again. Two steps are one-way on purpose: **power** (the good fuse locks into its socket the moment the lights return, because pulling it would have to black out the room and close the whole list) and **fire** (a fire that is out does not relight). Once the door is open the game is over and nothing re-seals it.
 
 **The player can read the list from anywhere.** Pressing the primary button on either controller (X/A), or `3` on the keyboard in the simulator, brings up a floating panel about half a metre in front of the eyes showing exactly what the terminal shows; pressing again dismisses it. The panel is a remote feed of the terminal, not a second list, so there is only one place in the code that renders the checklist — and before power is restored it reads `NO SIGNAL`, because the terminal is dead.
 
@@ -132,11 +140,11 @@ The terminal by the door lists them. Each one solved turns its row green.
 
 #### Task D — Hazardous samples (cold storage)
 
-**Player sees:** three colored sample vials scattered around the room (on the cabinet, on the bench, on the shelf), and a cold storage fridge whose shelf has three color-marked slots. A red status light on the fridge.
+**Player sees:** three colored sample vials scattered around the room (on the lab bench, on the centrifuge bench, on the extinguisher shelf), and a cold storage fridge whose shelf has three color-marked slots. A red status light on the fridge.
 
 **Player does:** collects the vials, drops each into the slot marked with its color, and closes the fridge door (another grabbed hinge).
 
-**Rules:** a slot accepts only its own color. The task counts only when all three are in **and** the door is shut; when it is done the door locks and the light turns green.
+**Rules:** a slot accepts only its own color. The task counts only when all three are in **and** the door is shut; when it is done the light turns green. The door does not lock: opening it again breaks containment and turns the light red.
 
 **Interactions shown:** search, sorting by a visual key, several validated sockets, a hinged door, a completion condition that spans multiple objects.
 

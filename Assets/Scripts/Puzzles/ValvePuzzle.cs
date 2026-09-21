@@ -4,6 +4,7 @@ using UnityEngine.Events;
 // משימת בטיחות: שטיפת האוויר בחנקן.
 // השסתום קובע לאן הלחץ שואף, אבל הלחץ מגיע לשם כמו קפיץ: סיבוב מהיר עובר את המטרה.
 // מעבר לקו האדום מפעיל אזעקה. צריך לסגור את השסתום עד הסוף ולנסות שוב, לאט יותר.
+// גם אחרי הפתרון הלחץ ממשיך להיבדק: הזזת השסתום מחוץ לתחום מחזירה את המשימה לאדום.
 public class ValvePuzzle : PuzzleStep
 {
     [Header("Parts")]
@@ -13,11 +14,18 @@ public class ValvePuzzle : PuzzleStep
     // מה קורה בעולם כשהלחץ יציב (בסצנה: מאוורר האוורור מתחיל להסתובב)
     [SerializeField] private UnityEvent onStabilized;
 
+    // מה קורה כשהלחץ יוצא שוב מהתחום אחרי שכבר התייצב (בסצנה: המאוורר נעצר)
+    [SerializeField] private UnityEvent onDestabilized;
+
     [Header("Target")]
     [SerializeField] private float greenMin = 0.6f;
     [SerializeField] private float greenMax = 0.7f;
     [SerializeField] private float redLine = 0.9f;
     [SerializeField] private float holdSeconds = 2f;
+
+    // כמה זמן הלחץ צריך להיות מחוץ לתחום עד שהמשימה מתבטלת.
+    // הקפיץ רועד לרגע סביב הקצה, ובלי זה המאוורר היה נעצר ומתחיל מכל רעידה.
+    [SerializeField] private float leaveGraceSeconds = 0.5f;
 
     [Header("Pressure spring")]
     [SerializeField] private float stiffness = 20f;   // כמה חזק הלחץ נמשך אל השסתום
@@ -29,13 +37,14 @@ public class ValvePuzzle : PuzzleStep
     private float pressure;
     private float pressureVelocity;
     private float holdTimer;
+    private float outTimer;
     private bool venting;
 
     // אין כאן אירועים: הלחץ משתנה כל הזמן, אז דוגמים אותו בכל פריים.
     // אירוע מתאים לרגע ("נמשך", "נכנס"). ערך רציף מתאים לדגימה.
     private void Update()
     {
-        // עד שמגיע התור של החידה, המד כבוי והטיימר לא סופר
+        // עד שמגיע התור של החידה, המד כבוי והטיימרים לא סופרים
         if (!IsActive) return;
 
         UpdatePressure();
@@ -43,9 +52,18 @@ public class ValvePuzzle : PuzzleStep
         bool inBand = !venting && pressure >= greenMin && pressure <= greenMax;
         gauge.Show(pressure, inBand, venting);
 
-        // צריך להחזיק בתחום ברציפות. יציאה ממנו מאפסת את הספירה.
-        holdTimer = inBand ? holdTimer + Time.deltaTime : 0f;
-        if (holdTimer >= holdSeconds) Solve();
+        if (!IsSolved)
+        {
+            // כדי להיפתר צריך להחזיק בתחום ברציפות. יציאה ממנו מאפסת את הספירה.
+            holdTimer = inBand ? holdTimer + Time.deltaTime : 0f;
+            if (holdTimer >= holdSeconds) Solve();
+        }
+        else
+        {
+            // כדי להתבטל צריך להישאר מחוץ לתחום. חזרה אליו מאפסת את הספירה.
+            outTimer = inBand ? 0f : outTimer + Time.deltaTime;
+            if (outTimer >= leaveGraceSeconds) Unsolve();
+        }
     }
 
     private void UpdatePressure()
@@ -75,8 +93,15 @@ public class ValvePuzzle : PuzzleStep
 
     protected override void OnSolved()
     {
-        gauge.Show(pressure, true, false);
+        outTimer = 0f;
         onStabilized.Invoke();
         Debug.Log("Safety task solved: air purge stable");
+    }
+
+    protected override void OnUnsolved()
+    {
+        holdTimer = 0f;   // כדי להיפתר שוב צריך להחזיק שתי שניות מההתחלה
+        onDestabilized.Invoke();
+        Debug.Log("Safety task broken: air purge pressure lost");
     }
 }
