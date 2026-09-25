@@ -13,6 +13,8 @@ Nothing here carries a licence that forbids redistribution, so the repository ca
 | Binder notebook | Binders on the shelf and on the floor | DaDrood | [Poly Haven](https://polyhaven.com/a/binder_notebook) | CC0 |
 | Decorative book set 01 | Journals on the shelving (12 of 87 pieces used) | James Ray Cock | [Poly Haven](https://polyhaven.com/a/decorative_book_set_01) | CC0 |
 | LabTable2 | The island bench, with its sink and tap | Judith Solomon | [Sketchfab](https://sketchfab.com/3d-models/labtable2-24503d139cb049249be6fe4c2d04e7c9) | CC BY 4.0 |
+| Old Fuse Box | The fuse panel on the east wall: its door, main switch and fuse holders | chathurangaten | [Sketchfab](https://sketchfab.com/3d-models/old-fuse-box-11aeae649e2e4245b0db5821c6726c3f) | CC BY 4.0 |
+| Electronic Fuse | Every fuse in the game, including the burnt one and the two decoys | Zillious | [Sketchfab](https://sketchfab.com/3d-models/electronic-fuse-2c09b1e3e1d6475a99172ebe2f18cd51) | CC BY 4.0 |
 | Lab chair | The three lab stools, one knocked over | Just8 | [Sketchfab](https://sketchfab.com/3d-models/lab-chair-6d6100a7b18f4ab798ff484130b31fe1) | CC BY 4.0 |
 | Laptop | Laptop on the island bench | senthil123 | [Sketchfab](https://sketchfab.com/3d-models/laptop-426afac17c664f1a9e3224394024fb7e) | CC BY 4.0 |
 | Fire Extinguisher | The extinguisher used on the fire task | Loïc | [Sketchfab](https://sketchfab.com/3d-models/fire-extinguisher-5676b179b3b744c0aaae53a3dcea2300) | CC BY 4.0 |

@@ -70,19 +70,22 @@ built from primitives, and reads well enough at VR distance.
 
 ## 4. The tasks in detail
 
-### Step 1 — Restore power (drawer → fuse → fuse box)
+### Step 1 — Restore power (fuse box → drawers → fuse → main switch)
 
-**Player sees:** a dark room lit only by the fire in the waste bin. A small electrical box on the east wall with a **blackened, burnt-out fuse still in its socket**. An office desk against the same wall, its drawers shut.
+**Player sees:** a dark room lit only by red emergency lamps and the fire in the waste bin. A closed fuse box on the east wall, cables running up from it into the conduit. An office desk against the same wall, its drawers shut.
 
-**Player does:** pulls the dead fuse out of the socket, pulls open the desk's top drawer (it slides along one axis between fixed limits), finds the spare fuse lying inside, carries it to the box, and releases it near the socket, where a ghost preview shows where it will go.
+**Player does:** swings the fuse box door open and sees two cartridge fuses side by side — one clear, one with **blackened glass** — and a main switch that is down. Pulls the burnt fuse out, searches the desk drawers (all six open), finds a spare that matches the fuse that survived, pushes it into the empty holder, and throws the main switch up.
 
 **Rules:**
-- The socket accepts **any fuse** — including the burnt one — and nothing else. A socket cannot tell a dead fuse from a live one, so putting the burnt one back is allowed and simply does nothing. The puzzle, not the socket, checks whether the fuse works.
-- Only one fuse fits at a time, so the old one has to come out first.
+- Power returns only when **every** holder has a good fuse **and** the switch is up. Raising the switch first, or putting the burnt fuse back, simply does nothing; the moment both conditions hold, the lights come on.
+- A holder accepts any fuse of the right type — including the burnt one, because a socket cannot tell a dead fuse from a live one. The puzzle, not the socket, checks whether it works.
+- Two **decoy fuses** sit in other drawers: the same kind of cartridge, but one too small and one too large. The holders refuse them, the way a fuse of the wrong size would not fit a real holder. This is the intended mistake: the player has to compare against the good fuse still in the box.
+- Power is one-way: once the lights are on, both fuses lock into their holders and the switch stays up.
 
-**Result:** the ceiling lamp fades on, and the lockdown terminal boots with the checklist showing four red rows.
+**Result:** the emergency lamps cut out, the ceiling fixtures flicker on one by one, and the lockdown terminal boots with the checklist showing four red rows.
 
-**Interactions shown:** constrained linear motion, carrying an object across the room, a keyed socket that validates what goes in.
+**Interactions shown:** a hinged door, constrained linear motion (drawers), carrying an object across the room, a keyed socket that refuses the wrong part, and a lever throw.
+
 
 ### The safety checklist — four tasks, any order
 
@@ -125,7 +128,7 @@ The terminal by the door lists them. Each one solved turns its row green.
 
 #### Task C — Equipment (balance the centrifuge)
 
-**Player sees:** a centrifuge on the bench, rattling against its own lid, its little display reading **IMBALANCE**. Three sample tubes sit in neighbouring slots of a six-slot rotor; a fourth tube lies on the bench where the machine threw it.
+**Player sees:** a benchtop centrifuge (the "LS-6", built from primitives because no free centrifuge model had a licence the public repository allows) rattling against its own lid, its sloped control panel reading **IMBALANCE / OPEN LID**. Through the tinted lid window: an aluminium rotor with six numbered holes, each ringed in a colour that it shares only with the hole opposite it (1-4 green, 2-5 orange, 3-6 purple). Three tubes sit in holes 1, 2 and 3; a fourth lies on the bench where the machine threw it. A sticker on the lid shows the rule without words: **LOAD OPPOSITE PAIRS**, with a correct loading marked OK and a lopsided one marked NO.
 
 **Player does:** lifts the lid (a hinge grabbed and swung like the valve is turned), rearranges the tubes so they sit in **opposite pairs**, drops the fourth tube in, and closes the lid.
 
