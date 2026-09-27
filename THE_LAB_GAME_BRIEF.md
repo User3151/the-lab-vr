@@ -111,7 +111,7 @@ The terminal by the door lists them. Each one solved turns its row green.
 
 #### Task B — Air (nitrogen purge)
 
-**Player sees:** a round pressure gauge with a green band (60–70% of the scale) and a red zone (90% and up), a red valve wheel below it, and a vent fan above.
+**Player sees:** an industrial exhaust station on the west wall, labelled **N2 EXHAUST — HOLD NEEDLE IN GREEN**: a square wall fan at the top, a real 0–1.6 MPa pressure gauge in the middle with a green band painted across its scale (60–70%) next to its printed red zone, and a red gate-valve handwheel at the bottom, fed by a pipe that runs down beside the fan. In the story the fire-suppression system flooded the room with nitrogen, and this is how it gets pumped back out.
 
 **Player does:** turns the valve wheel by grabbing its rim and moving the hand around its center — up to 1.5 full turns from closed to open.
 
@@ -143,13 +143,15 @@ The terminal by the door lists them. Each one solved turns its row green.
 
 #### Task D — Hazardous samples (cold storage)
 
-**Player sees:** three colored sample vials scattered around the room (on the lab bench, on the centrifuge bench, on the extinguisher shelf), and a cold storage fridge whose shelf has three color-marked slots. A red status light on the fridge.
+**Player sees:** the rack of hazardous samples that the centrifuge knocked over, lying on its side on the centrifuge bench in an olive-green puddle. Three short screw-cap cryovials — red, blue and yellow caps, a yellow biohazard band — lie in the spill, one of them on the floor under the bench in its own drip. They look nothing like the long, thin centrifuge tubes, so nobody tries to put them in the centrifuge. On the west wall hangs a yellow **SPILL KIT — BIOHAZARD RESPONSE** cabinet. Across the room, a medical fridge on a steel stand carries a door sign (SAMPLES / KEEP AT 4°C); inside, a tube rack has three holes ringed red, blue and yellow.
 
-**Player does:** collects the vials, drops each into the slot marked with its color, and closes the fridge door (another grabbed hinge).
+**Player does:** reaches for a vial and finds that a bare hand cannot pick it up — a biohazard is not handled by hand. Opens the spill kit, takes the **tongs**, and uses them: the trigger closes the jaws on a vial, releasing it drops the vial into whatever holds it next. Carries each vial across the room in the tongs, drops it into the hole of its own colour, and closes the fridge door.
+
+**How the tongs work:** the vials sit on their own interaction layer (`Tongs`) that neither hand can reach. The tongs carry a small socket between the jaws on that layer, inactive until the trigger is squeezed; releasing the trigger deactivates it and XRI lets the vial go, straight into the rack's socket if it is above one. `Tongs.cs` only switches that socket and animates the arms. The tongs hang on a keyed hook in the cabinet and can be put back.
 
 **Rules:** a slot accepts only its own color. The task counts only when all three are in **and** the door is shut; when it is done the light turns green. The door does not lock: opening it again breaks containment and turns the light red.
 
-**Interactions shown:** search, sorting by a visual key, several validated sockets, a hinged door, a completion condition that spans multiple objects.
+**Interactions shown:** tool-mediated grabbing (an instrument that picks things up instead of the hand), sorting by a visual key, several validated sockets, two hinged doors, a completion condition that spans multiple objects.
 
 ### Step 3 — Open the door (two-handed lever)
 
