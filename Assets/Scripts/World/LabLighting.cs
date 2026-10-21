@@ -6,12 +6,13 @@ using UnityEngine;
 // היא לא יודעת למה החשמל חזר. מי שמחליט (החידה) פשוט קורא ל-PowerOn.
 public class LabLighting : MonoBehaviour
 {
-    // מנורה אחת: האור עצמו, והחלק שנראה דולק (משנה חומר בין דולק לכבוי)
+    // מנורה אחת: האור עצמו, החלק שנראה דולק (משנה חומר בין דולק לכבוי), והצליל שלה
     [System.Serializable]
     public class Lamp
     {
         public Light light;
         public Renderer glow;
+        public AudioSource sound;   // מתנגן כשהמנורה מתחילה להבהב. ריק = מנורה שקטה
     }
 
     [Header("Emergency")]
@@ -72,6 +73,8 @@ public class LabLighting : MonoBehaviour
     // פלורסנט לא נדלק בבת אחת: הוא מהבהב כמה פעמים ורק אז נשאר דולק
     private IEnumerator FlickerOn(Lamp lamp)
     {
+        if (lamp.sound != null) lamp.sound.Play();
+
         for (int i = 0; i < flickers; i++)
         {
             Set(lamp, true, ceilingOn);

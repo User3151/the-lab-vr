@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
@@ -22,6 +23,10 @@ public class GameFlow : MonoBehaviour
     [SerializeField] Button restartButton;
 
     [SerializeField] XROrigin origin;
+
+    [Header("Events")]
+    [SerializeField] UnityEvent onGameStarted;     // למשל: מוזיקת הרקע מתחילה
+    [SerializeField] UnityEvent onGameEnded;       // למשל: מוזיקת הסיום
 
     float startTime;
     bool doorOpen;   // כל הרשימה נפתרה, מותר לצאת
@@ -54,6 +59,7 @@ public class GameFlow : MonoBehaviour
         startScreen.SetActive(false);
         foreach (var go in gameplayRoots) go.SetActive(true);
         startTime = Time.time;
+        onGameStarted.Invoke();
     }
 
     void HandleAllSolved()
@@ -89,6 +95,8 @@ public class GameFlow : MonoBehaviour
         float seconds = Time.time - startTime;
         int minutes = Mathf.FloorToInt(seconds / 60f);
         timeText.text = minutes.ToString("00") + ":" + Mathf.FloorToInt(seconds % 60f).ToString("00");
+
+        onGameEnded.Invoke();
     }
 
     void Restart()

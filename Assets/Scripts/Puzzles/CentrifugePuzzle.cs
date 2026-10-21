@@ -23,6 +23,11 @@ public class CentrifugePuzzle : PuzzleStep
     [SerializeField] private float shakeAmplitude = 0.006f;
     [SerializeField] private float spinSeconds = 3f;
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource motor;
+    [SerializeField] private AudioClip unbalancedLoop;   // מנוע עם דפיקות, כל עוד היא רועדת
+    [SerializeField] private AudioClip spinUp;           // האצה חלקה בריצה המאוזנת
+
     private Vector3 shakeRestPosition;
     private float spinEndTime = -1f;
 
@@ -69,6 +74,13 @@ public class CentrifugePuzzle : PuzzleStep
         // מכסה סגור ולא מאוזן: המכונה מנסה להסתובב ורועדת. זה הרמז הראשון שמשהו לא בסדר.
         shakeBody.localPosition = shakeRestPosition + Random.insideUnitSphere * shakeAmplitude;
         display.text = "<color=#FF3B30>IMBALANCE</color>\nOPEN LID";
+
+        if (!motor.isPlaying)
+        {
+            motor.clip = unbalancedLoop;
+            motor.loop = true;
+            motor.Play();
+        }
     }
 
     private void StartBalancedRun()
@@ -78,6 +90,11 @@ public class CentrifugePuzzle : PuzzleStep
         rotor.StartSpinning();
         spinEndTime = Time.time + spinSeconds;
         display.text = "<color=#3DDC84>BALANCED</color>\nTEST RUN";
+
+        // הקליפ ארוך מהריצה, כך שהזמזום נמשך עוד רגע אחרי הפתרון ונגמר לבד
+        motor.clip = spinUp;
+        motor.loop = false;
+        motor.Play();
     }
 
     // מאוזן = כל המבחנות בפנים, והממוצע של המיקומים שלהן יושב על ציר הסיבוב
@@ -101,7 +118,12 @@ public class CentrifugePuzzle : PuzzleStep
         return count;
     }
 
-    private void StopShaking() => shakeBody.localPosition = shakeRestPosition;
+    // עוצר את הרעידה, וגם את הצליל שלה. צליל ההאצה ממשיך.
+    private void StopShaking()
+    {
+        shakeBody.localPosition = shakeRestPosition;
+        if (motor.clip == unbalancedLoop) motor.Stop();
+    }
 
     protected override void OnSolved()
     {

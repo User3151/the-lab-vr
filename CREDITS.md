@@ -44,6 +44,11 @@ in the repository: a vintage book set (CC BY-NC, and made with Autodesk educatio
 software) and a cup (CC BY-SA, whose share-alike terms would follow any edit we made
 to it).
 
+## Sound effects
+
+All 37 sound effects in `Assets/Audio/SFX` were generated with
+[ElevenLabs](https://elevenlabs.io) Sound Effects, one prompt per sound, for this project.
+
 ## Voice
 
 D-7's voice lines are generated; see the project brief for details.
