@@ -16,11 +16,14 @@ public class CoachDrone : MonoBehaviour
     [Header("Point of interest")]
     [SerializeField] private float distanceFromFocus = 0.7f;   // כמה קרוב לנקודה, בצד של השחקן
     [SerializeField] private float heightAboveFocus = 0.3f;
+    [SerializeField] private float sideFromFocus = 0.45f;      // הצידה מקו הראייה, כדי לא להסתיר את הנקודה
 
     [Header("Obstacles")]
     [SerializeField] private LayerMask obstacleMask = ~0;      // מה נחשב מכשול
     [SerializeField] private float clearanceRadius = 0.18f;    // חצי הרוחב של הרחפן
-    [SerializeField] private float minDistanceFromHead = 0.5f; // גם כשצפוף, הוא לא נכנס לפנים שלך
+    [SerializeField] private float minDistanceFromHead = 0.8f; // גם כשצפוף, הוא לא נכנס לפנים שלך
+    [SerializeField] private float comfortDistance = 1f;       // קרוב מזה, הוא מתחיל לעלות מעל קו העיניים
+    [SerializeField] private float maxLift = 0.45f;            // כמה הוא עולה כשהוא הכי קרוב
 
     [Header("Hover")]
     [SerializeField] private float bobAmplitude = 0.03f;
@@ -88,11 +91,15 @@ public class CoachDrone : MonoBehaviour
         return head.position + right * sideOffset + Vector3.up * heightOffset + forward * forwardOffset;
     }
 
-    // ליד הנקודה, בצד שפונה לשחקן, קצת מעליה: כך השחקן רואה את שניהם יחד
+    // ליד הנקודה, בצד שפונה לשחקן, קצת מעליה, וגם הצידה מקו הראייה: כך השחקן רואה את שניהם
+    // ואת הנקודה עצמה בלי שהרחפן יסתיר אותה. הצד הוא הצד שבו הרחפן כבר נמצא, כדי שלא יחצה מול העיניים.
     private Vector3 FocusPosition()
     {
         Vector3 toPlayer = Vector3.ProjectOnPlane(head.position - focus.position, Vector3.up).normalized;
-        return focus.position + toPlayer * distanceFromFocus + Vector3.up * heightAboveFocus;
+        Vector3 side = Vector3.Cross(Vector3.up, toPlayer);
+        float sign = Vector3.Dot(transform.position - focus.position, side) >= 0f ? 1f : -1f;
+
+        return focus.position + toPlayer * distanceFromFocus + side * (sideFromFocus * sign) + Vector3.up * heightAboveFocus;
     }
 
     // הקו מהראש של השחקן אל המקום המבוקש הוא קו ראייה: אם הוא חוסם, אין טעם לעוף לשם.
@@ -112,6 +119,9 @@ public class CoachDrone : MonoBehaviour
 
         // נעצרים לפני המכשול, אבל לא מתקרבים לשחקן מדי
         float allowed = Mathf.Max(minDistanceFromHead, hit.distance - clearanceRadius);
-        return head.position + direction * allowed;
+
+        // ככל שנדחק קרוב יותר, עולה מעל קו העיניים כדי לא לחסום את מה שהשחקן מסתכל עליו
+        float closeness = Mathf.InverseLerp(comfortDistance, minDistanceFromHead, allowed);
+        return head.position + direction * allowed + Vector3.up * (maxLift * closeness);
     }
 }

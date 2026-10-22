@@ -46,8 +46,9 @@ to it).
 
 ## Sound effects
 
-All 37 sound effects in `Assets/Audio/SFX` were generated with
-[ElevenLabs](https://elevenlabs.io) Sound Effects, one prompt per sound, for this project.
+Every sound effect in `Assets/Audio/SFX` except `alarm_lockdown.wav`, and both music
+tracks in `Assets/Audio/Music`, were generated with [ElevenLabs](https://elevenlabs.io)
+Sound Effects, one prompt per sound, for this project.
 
 ## Voice
 
