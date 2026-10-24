@@ -52,4 +52,6 @@ Sound Effects, one prompt per sound, for this project.
 
 ## Voice
 
-D-7's voice lines are generated; see the project brief for details.
+D-7's 36 voice lines in `Assets/Audio/Coach` were generated with
+[ElevenLabs](https://elevenlabs.io) Eleven v3 text to speech, using the built-in voice
+"Callum", from a script written for this project.

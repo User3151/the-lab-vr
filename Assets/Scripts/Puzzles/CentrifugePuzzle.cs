@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Filtering;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // משימת בטיחות: לאזן את הצנטריפוגה.
 // צנטריפוגה עם מבחנות לא מאוזנות רועדת ועלולה להישבר. צריך לפתוח את המכסה, לסדר את המבחנות
@@ -31,10 +33,16 @@ public class CentrifugePuzzle : PuzzleStep
     private Vector3 shakeRestPosition;
     private float spinEndTime = -1f;
 
+    // המכסה נעול כל עוד הריצה נמשכת, וגם עד שהרוטור עוצר לגמרי, כמו במכשיר אמיתי
+    private bool LidLocked => spinEndTime >= 0f || !rotor.IsStopped;
+
     private void Awake()
     {
         shakeRestPosition = shakeBody.localPosition;
         display.text = "";   // בלי חשמל אין תצוגה
+
+        // לא מכבים את המכסה: אינטראקטבל כבוי עדיין נתפס. מסנן בחירה הוא נעילה אמינה.
+        lid.selectFilters.Add(new XRSelectFilterDelegate((interactor, interactable) => !LidLocked));
     }
 
     private void Update()
@@ -86,7 +94,10 @@ public class CentrifugePuzzle : PuzzleStep
     private void StartBalancedRun()
     {
         StopShaking();
-        lid.enabled = false;   // נועלים את המכסה בזמן סיבוב, כמו במכשיר אמיתי
+
+        // יד שעדיין מחזיקה את המכסה משתחררת ממנו, והמסנן לא ייתן לתפוס אותו שוב עד שהרוטור עוצר
+        if (lid.isSelected) lid.interactionManager.CancelInteractableSelection((IXRSelectInteractable)lid);
+
         rotor.StartSpinning();
         spinEndTime = Time.time + spinSeconds;
         display.text = "<color=#3DDC84>BALANCED</color>\nTEST RUN";
@@ -127,9 +138,8 @@ public class CentrifugePuzzle : PuzzleStep
 
     protected override void OnSolved()
     {
-        rotor.StopSpinning();
-        lid.enabled = true;
-        spinEndTime = -1f;   // הריצה הסתיימה. ריצה חדשה תתחיל רק אחרי שהאיזון ישובש ויתוקן.
+        rotor.StopSpinning();   // הרוטור מאט עכשיו. המכסה ייפתח לבד כשהוא יעצור
+        spinEndTime = -1f;      // הריצה הסתיימה. ריצה חדשה תתחיל רק אחרי שהאיזון ישובש ויתוקן.
         display.text = "<color=#3DDC84>BALANCED</color>\nSAFE";
         Debug.Log("Safety task solved: centrifuge balanced");
     }

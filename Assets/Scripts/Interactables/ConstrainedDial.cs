@@ -67,6 +67,15 @@ public class ConstrainedDial : XRBaseInteractable
         transform.localRotation = restLocalRotation * Quaternion.AngleAxis(SnappedAngle, localAxis);
     }
 
+    // קופץ מיד לערך (0 עד 1), למשל מכסה שננעל כשהוא כמעט סגור.
+    // ProcessInteractable מסובב רק כשמחזיקים, לכן מסובבים כאן בעצמנו.
+    public void SnapTo(float value)
+    {
+        currentAngle = Mathf.Clamp01(value) * maxAngle;
+        hasLastHandAngle = false;
+        transform.localRotation = restLocalRotation * Quaternion.AngleAxis(SnappedAngle, localAxis);
+    }
+
     // הזווית של היד סביב הציר, ביחס לכיוון קבוע.
     // מחזיר false כשהיד כמעט על הציר, כי שם כל רעד קטן הוא קפיצה גדולה בזווית.
     private bool TryGetHandAngle(Vector3 handPosition, out float angle)
