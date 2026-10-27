@@ -4,9 +4,9 @@
 
 You wake up on the floor of a sealed research lab. Your own unbalanced centrifuge run started a chain of failures: the power is out, a bin is on fire, the air is full of nitrogen and hazardous samples are spilled across the bench. D-7, the lab's sarcastic safety drone, talks you through restoring power, making the room safe and getting out.
 
-[![The lab at the start of a run, lit only by the red emergency lamps and the burning bin](docs/media/start_red.jpg)](https://youtu.be/HChVFxMmSKM)
+[![The lab at the start of a run, lit only by the red emergency lamps and the burning bin](docs/media/start_red.jpg)](https://youtu.be/CjcZjJJBniY)
 
-▶ **[Watch the full playthrough on YouTube (5 min)](https://youtu.be/HChVFxMmSKM)**
+▶ **[Watch the highlights (90 s)](https://youtu.be/CjcZjJJBniY)** · [Full playthrough (5 min)](https://youtu.be/HChVFxMmSKM)
 
 ![The lab with the power back on](docs/media/lab_lit.jpg)
 
