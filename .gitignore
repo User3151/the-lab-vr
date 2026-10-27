@@ -116,3 +116,6 @@ Packages/com.github.homuler.mediapipe/
 .vsconfig
 ignore.conf
 HANDOFF_TO_CODE.md
+
+# Personal study notes, kept out of the public repo
+patterns.md
