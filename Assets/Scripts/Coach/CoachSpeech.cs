@@ -14,6 +14,10 @@ public class CoachSpeech : MonoBehaviour
     [SerializeField] private float minSeconds = 2f;
     [SerializeField] private float pauseAfterLine = 0.4f;
 
+    // נקרא ברגע שמשפט מתחיל להישמע, לא כשהוא נכנס לתור.
+    // כך מי שמאזין (הבמאי) יכול לעשות משהו בדיוק כשהמשפט נאמר, למשל לשלוח את הרחפן לנקודה שהוא מדבר עליה.
+    public event System.Action<CoachLine> LineStarted;
+
     private readonly Queue<CoachLine> queue = new();
     private CoachLine current;
     private float currentEndTime;
@@ -85,5 +89,6 @@ public class CoachSpeech : MonoBehaviour
         }
 
         currentEndTime = Time.time + duration + pauseAfterLine;
+        LineStarted?.Invoke(line);
     }
 }

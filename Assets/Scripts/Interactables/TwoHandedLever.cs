@@ -4,23 +4,27 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // ידית כבדה על ציר: זזה רק כששתי ידיים אוחזות בה יחד.
 // אם יד אחת משחררת, הידית חוזרת למעלה. אם מושכים אותה עד הסוף, היא ננעלת.
+// הידית עוקבת אחרי כמה הידיים זזו לאורך המסלול של הקצה שלה, ולא אחרי הזווית שלהן סביב הציר.
+// כך היא זזה אותו דבר בין אם עומדים צמוד אליה ובין אם תופסים אותה בקרן מרחוק.
 public class TwoHandedLever : XRBaseInteractable
 {
     [Header("Hinge")]
     [SerializeField] private Vector3 localHingeAxis = Vector3.right;   // הציר שסביבו הידית מסתובבת
     [SerializeField] private float maxAngle = 80f;                     // משיכה מלאה, במעלות
+    [SerializeField] private float handleLength = 0.62f;               // מהציר עד המוט שתופסים, במטרים
 
     [Header("Feel")]
     [SerializeField] private float returnSpeed = 60f;          // מעלות לשנייה כשאין שתי ידיים
     [SerializeField] private float pulledAtPercent = 0.95f;    // מאיזה אחוז מהמהלך נחשב משוך
+    [SerializeField] private float pullGain = 1.5f;            // כל ס"מ של הידיים מזיז את הקצה 1.5 ס"מ
+    [SerializeField] private float leadAngle = 30f;            // מודדים בכיוון שהקצה יזוז בו עוד 30 מעלות
 
     // מכריז כשהידית נמשכה עד הסוף. הפאזל יאזין לזה ולא יצטרך להכיר את הידית.
     public static event System.Action<TwoHandedLever> OnPulled;
 
     private Quaternion restLocalRotation;
     private float currentAngle;
-    private float grabHandsAngle;    // זווית הידיים ברגע שהיד השנייה הצטרפה
-    private float grabLeverAngle;    // זווית הידית באותו רגע
+    private Vector3 lastMidpoint;    // איפה היו הידיים בפריים הקודם
     private bool wasTwoHanded;
     private bool locked;
 
@@ -44,14 +48,15 @@ public class TwoHandedLever : XRBaseInteractable
 
         if (twoHanded)
         {
-            // הרגע שבו היד השנייה הצטרפה: זוכרים את ההפרש, כדי שהידית לא תקפוץ אל הידיים
-            if (!wasTwoHanded)
-            {
-                grabHandsAngle = HandsAngle();
-                grabLeverAngle = currentAngle;
-            }
+            Vector3 midpoint = (interactorsSelecting[0].transform.position
+                              + interactorsSelecting[1].transform.position) * 0.5f;
 
-            currentAngle = Mathf.Clamp(grabLeverAngle + HandsAngle() - grabHandsAngle, 0f, maxAngle);
+            // הפריים הראשון עם שתי ידיים רק זוכר איפה הן, כדי שהידית לא תקפוץ.
+            // מכאן והלאה מצטברת רק התזוזה מהפריים הקודם.
+            if (wasTwoHanded)
+                currentAngle = Mathf.Clamp(currentAngle + AngleFromHandMotion(midpoint - lastMidpoint), 0f, maxAngle);
+
+            lastMidpoint = midpoint;
         }
         else
         {
@@ -65,22 +70,28 @@ public class TwoHandedLever : XRBaseInteractable
         CheckPulled();
     }
 
-    // הזווית של נקודת האמצע בין שתי הידיים, סביב ציר הידית.
-    // ההטלה על המישור מבטלת תנועה לאורך הציר עצמו: הזזה לצדדים לא נספרת.
-    private float HandsAngle()
+    // כמה מעלות שווה תזוזה של הידיים.
+    // נספר רק החלק של התזוזה שהולך בכיוון שהקצה של הידית זז בו. הזזה לצדדים לא מזיזה אותה.
+    private float AngleFromHandMotion(Vector3 handDelta)
     {
-        Vector3 midpoint = (interactorsSelecting[0].transform.position
-                          + interactorsSelecting[1].transform.position) * 0.5f;
-
         Quaternion restWorld = transform.parent != null
             ? transform.parent.rotation * restLocalRotation
             : restLocalRotation;
 
         Vector3 axis = restWorld * localHingeAxis.normalized;
-        Vector3 up = Vector3.ProjectOnPlane(restWorld * Vector3.up, axis);
-        Vector3 toHands = Vector3.ProjectOnPlane(midpoint - transform.position, axis);
 
-        return Vector3.SignedAngle(up, toHands, axis);
+        // הכיוון שבו הקצה זז במנוחה: ניצב גם לציר וגם למוט (מכפלה וקטורית)
+        Vector3 restTangent = Vector3.Cross(axis, restWorld * Vector3.up);
+
+        // למעלה, הקצה זז כמעט רק לכיוון השחקן, ומשיכה ישרה למטה לא הייתה עושה כלום.
+        // לכן מודדים בכיוון שהוא יזוז בו קצת יותר מאוחר, ולא יותר מ-90 מעלות (ישר למטה).
+        float lookAhead = Mathf.Min(currentAngle + leadAngle, 90f);
+        Vector3 tangent = Quaternion.AngleAxis(lookAhead, axis) * restTangent;
+
+        float alongPath = Vector3.Dot(handDelta, tangent) * pullGain;
+
+        // אורך קשת = רדיוס כפול זווית ברדיאנים
+        return alongPath / handleLength * Mathf.Rad2Deg;
     }
 
     private void CheckPulled()

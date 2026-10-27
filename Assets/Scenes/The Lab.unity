@@ -1132,6 +1132,153 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42364460}
   m_Mesh: {fileID: 6305260317702983407, guid: 3444e4f5a9c98fe4bac274a12fb12fca, type: 3}
+--- !u!1 &49308906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 49308910}
+  - component: {fileID: 49308909}
+  - component: {fileID: 49308908}
+  - component: {fileID: 49308907}
+  m_Layer: 0
+  m_Name: Spectator Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &49308907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49308906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a89ea88001ef5c9409d636020610b337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpectatorCamera
+  head: {fileID: 949288913}
+  horizontalFov: 105
+  positionSmoothTime: 0.08
+  rotationSharpness: 8
+  levelHorizon: 1
+  snapDistance: 1
+--- !u!114 &49308908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49308906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 0
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!20 &49308909
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49308906}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.02
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 0
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &49308910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49308906}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.59, y: 1.36, z: 1.59}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &53393840
 GameObject:
   m_ObjectHideFlags: 0
@@ -4552,6 +4699,133 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174400625}
   m_Mesh: {fileID: 6857134444900780442, guid: 3444e4f5a9c98fe4bac274a12fb12fca, type: 3}
+--- !u!1 &174417554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 174417555}
+  - component: {fileID: 174417556}
+  - component: {fileID: 174417557}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &174417555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174417554}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.42859933, y: -0.044993784, z: 0.02137664, w: 0.9021204}
+  m_LocalPosition: {x: -0.05, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031473330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &174417556
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174417554}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 0
+  m_Color: {r: 1, g: 0.78, b: 0.5, a: 1}
+  m_Intensity: 2.5
+  m_Range: 1.4
+  m_SpotAngle: 80
+  m_InnerSpotAngle: 45
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!114 &174417557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174417554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &176498686
 GameObject:
   m_ObjectHideFlags: 0
@@ -9454,6 +9728,7 @@ GameObject:
   - component: {fileID: 325826428}
   - component: {fileID: 325826427}
   - component: {fileID: 325826429}
+  - component: {fileID: 325826430}
   m_Layer: 0
   m_Name: DeskDrawer_06
   m_TagString: Untagged
@@ -9720,6 +9995,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3447871, y: 0.30278856, z: 1.117923}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133308}
+--- !u!114 &325826430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325826423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &327822049
 GameObject:
   m_ObjectHideFlags: 0
@@ -14050,6 +14348,96 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7434967355688441423, guid: 87a9be2a7620991a78342ef9a56fa62c, type: 3}
   m_PrefabInstance: {fileID: 478589305}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &478915652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 478915653}
+  - component: {fileID: 478915655}
+  - component: {fileID: 478915654}
+  m_Layer: 0
+  m_Name: Bracket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &478915653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478915652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.03, y: 0, z: 0}
+  m_LocalScale: {x: 0.06, y: 0.03, z: 0.04}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031473330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &478915654
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478915652}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c4f69fd163612264db44bbf3fd0da082, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &478915655
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478915652}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &483144060
 GameObject:
   m_ObjectHideFlags: 0
@@ -15327,8 +15715,11 @@ MonoBehaviour:
   m_ParentInteractableObject: {fileID: 0}
   localHingeAxis: {x: 1, y: 0, z: 0}
   maxAngle: 80
+  handleLength: 0.62
   returnSpeed: 60
   pulledAtPercent: 0.95
+  pullGain: 1.5
+  leadAngle: 30
 --- !u!114 &533677448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20355,6 +20746,7 @@ GameObject:
   - component: {fileID: 656694433}
   - component: {fileID: 656694432}
   - component: {fileID: 656694434}
+  - component: {fileID: 656694435}
   m_Layer: 0
   m_Name: DeskDrawer_05
   m_TagString: Untagged
@@ -20623,6 +21015,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3447871, y: 0.46523035, z: 1.1178474}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133308}
+--- !u!114 &656694435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656694428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &663754831
 GameObject:
   m_ObjectHideFlags: 0
@@ -24760,7 +25175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25631,6 +26046,96 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &775598792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 775598793}
+  - component: {fileID: 775598795}
+  - component: {fileID: 775598794}
+  m_Layer: 0
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &775598793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775598792}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.24, y: 0.055, z: 0.008}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1479935077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &775598794
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775598792}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dfc952e8b8ca6a94cae248506a2d08a8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &775598795
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775598792}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &779779533
 GameObject:
   m_ObjectHideFlags: 0
@@ -28998,6 +29503,7 @@ Transform:
   - {fileID: 656694429}
   - {fileID: 325826424}
   - {fileID: 782024373}
+  - {fileID: 1031473330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878449313
@@ -29672,6 +30178,7 @@ GameObject:
   - component: {fileID: 908960872}
   - component: {fileID: 908960871}
   - component: {fileID: 908960873}
+  - component: {fileID: 908960874}
   m_Layer: 0
   m_Name: FuseDrawer
   m_TagString: Untagged
@@ -29939,6 +30446,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3402305, y: 0.63129574, z: -0.31776685}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133296}
+--- !u!114 &908960874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908960867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &916066625
 GameObject:
   m_ObjectHideFlags: 0
@@ -31196,6 +31726,7 @@ GameObject:
   - component: {fileID: 949580623}
   - component: {fileID: 949580622}
   - component: {fileID: 949580624}
+  - component: {fileID: 949580625}
   m_Layer: 0
   m_Name: DeskDrawer_04
   m_TagString: Untagged
@@ -31464,6 +31995,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3421202, y: 0.6282638, z: 1.117923}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133308}
+--- !u!114 &949580625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949580618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &952247458
 GameObject:
   m_ObjectHideFlags: 0
@@ -32347,7 +32901,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 995618800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d02b3585640e9345bb04bec22318e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
   m_Navigation:
@@ -33538,6 +34092,41 @@ Transform:
   - {fileID: 1484668302}
   - {fileID: 1591632108}
   m_Father: {fileID: 2059407834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1031473329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031473330}
+  m_Layer: 0
+  m_Name: FuseBoxLamp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031473330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031473329}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.84, y: 1.7, z: 1.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 478915653}
+  - {fileID: 2047156494}
+  - {fileID: 2049700148}
+  - {fileID: 174417555}
+  m_Father: {fileID: 874480357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1036428241
 PrefabInstance:
@@ -40598,6 +41187,7 @@ GameObject:
   - component: {fileID: 1262221582}
   - component: {fileID: 1262221584}
   - component: {fileID: 1262221583}
+  - component: {fileID: 1262221585}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -40820,6 +41410,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1262221585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262221580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 0.9
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1263487964
 GameObject:
   m_ObjectHideFlags: 0
@@ -41861,7 +42474,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1283021748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d02b3585640e9345bb04bec22318e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
   m_Navigation:
@@ -42629,6 +43242,187 @@ RectTransform:
   m_AnchoredPosition: {x: -9, y: 0}
   m_SizeDelta: {x: -18, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1295873586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1295873587}
+  - component: {fileID: 1295873589}
+  - component: {fileID: 1295873588}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1295873587
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295873586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1479935077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.22, y: 0.05}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1295873588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295873586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Press <color=#3DDC84>R1</color> to open
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: cfc7c8b2f32e8a1489b8626512cb9ea6, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.25
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0.05
+  m_fontSizeMax: 0.3
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 1295873589}
+  m_maskType: 0
+--- !u!23 &1295873589
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295873586}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: cfc7c8b2f32e8a1489b8626512cb9ea6, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1299252125
 GameObject:
   m_ObjectHideFlags: 0
@@ -42905,6 +43699,7 @@ GameObject:
   - component: {fileID: 1313490980}
   - component: {fileID: 1313490982}
   - component: {fileID: 1313490981}
+  - component: {fileID: 1313490983}
   m_Layer: 0
   m_Name: MainSwitch
   m_TagString: Untagged
@@ -43125,6 +43920,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1313490983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313490978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.4
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: switch on
+  closeVerb: switch off
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1314425103
 GameObject:
   m_ObjectHideFlags: 0
@@ -44596,6 +45414,7 @@ GameObject:
   - component: {fileID: 1375554312}
   - component: {fileID: 1375554311}
   - component: {fileID: 1375554313}
+  - component: {fileID: 1375554314}
   m_Layer: 0
   m_Name: DeskDrawer_02
   m_TagString: Untagged
@@ -44865,6 +45684,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3418837, y: 0.46787143, z: -0.31879753}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133308}
+--- !u!114 &1375554314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375554307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1378228826
 GameObject:
   m_ObjectHideFlags: 0
@@ -44997,35 +45839,40 @@ MonoBehaviour:
   - step: {fileID: 1579793001}
     focus: {fileID: 782024373}
     intro:
-    - text: 'First problem: no power. The fuse box is on the wall. One of those fuses
-        took the hit.'
+    - text: 'First problem: no power. See the fuse box on the wall, next to the metal
+        desk? There''s a little lamp beside it. One of the fuses inside burnt out.'
       clip: {fileID: 8300000, guid: 958d4b2995cdca14ea6baeac57a00e1b, type: 3}
-    - text: Spares live in the desk drawers. Right next to the snacks everyone here
-        denies having.
+    - text: Here's the plan. Open the box, take out the black fuse, and put a fresh
+        one in its place. The spares are in the metal desk's drawers.
       clip: {fileID: 8300000, guid: fb43fa7e787ed2c41888ae3a95f8b911, type: 3}
+    - text: Then push the big switch inside the box all the way up. Fuse first, then
+        switch. The order matters.
+      clip: {fileID: 8300000, guid: cba3b4335156414429f5221b803172e8, type: 3}
+    nextUp: []
     hints:
-    - afterIdleSeconds: 35
+    - afterIdleSeconds: 25
       focus: {fileID: 1854555667}
       line:
-        text: The fuse box has a door. Doors open. One of the fuses in there is black...
-          and black is bad.
+        text: The fuse box is the grey box on the wall, beside the small lamp. Open
+          its door. The black fuse is the dead one.
         clip: {fileID: 8300000, guid: 56a11b908cb98c649bf6cb40234b6aca, type: 3}
-    - afterIdleSeconds: 40
+    - afterIdleSeconds: 30
       focus: {fileID: 2287226256700980417}
       line:
-        text: The metal desk. Its drawers open when you pull them. Revolutionary,
-          I know.
+        text: Pull the black fuse out of its holder. A spare is waiting in the metal
+          desk. Open the drawers until you find it.
         clip: {fileID: 8300000, guid: 9574a0c11aa2b37409eec1cfdd16e71f, type: 3}
-    - afterIdleSeconds: 60
+    - afterIdleSeconds: 35
       focus: {fileID: 908960868}
       line:
-        text: Top drawer, nearest corner. Same size as the fuse that survived. Size
-          matters, with fuses.
+        text: Top drawer, on the right side of the desk. The other drawers have fuses
+          in the wrong size. Pick the one that matches the fuse still in the box.
         clip: {fileID: 8300000, guid: c7f8f6ba47b62d74a9ebe1d16cb7a101, type: 3}
-    - afterIdleSeconds: 60
+    - afterIdleSeconds: 35
       focus: {fileID: 1313490979}
       line:
-        text: Fuse in, then the main switch. Up means on. Try to look surprised.
+        text: Fresh fuse in? Good. Now the switch, the handle at the bottom of the
+          box. Push it all the way up. That's what turns the power on.
         clip: {fileID: 8300000, guid: d9264452e16de1443a1388a65f54fe27, type: 3}
     solved:
     - text: Lights! Wonderful. Now I can see how messy this place really is.
@@ -45036,9 +45883,11 @@ MonoBehaviour:
     - text: Power's back, and the lockdown kicked in. The door stays shut until the
         safety checklist is all green.
       clip: {fileID: 8300000, guid: 668298098860232429020945246636ef, type: 3}
-    - text: Fire, air, centrifuge, samples. Any order you like. Your checklist is
-        one button away.
+    - text: 'Four jobs: put out the fire, clear the air, balance the centrifuge,
+        and lock the samples back in the fridge. Any order you like. Your checklist
+        shows what''s still red.'
       clip: {fileID: 8300000, guid: a4e3f7c4905d46f469b43fa9fe1f3c64, type: 3}
+    nextUp: []
     hints:
     - afterIdleSeconds: 45
       focus: {fileID: 0}
@@ -45051,12 +45900,16 @@ MonoBehaviour:
   - step: {fileID: 833733892}
     focus: {fileID: 1869065954}
     intro: []
+    nextUp:
+    - text: 'Next up: that burning bin by the back wall. The extinguisher hangs past
+        the metal desk, right under its sign.'
+      clip: {fileID: 8300000, guid: d7267369ad34ca8409157dc4f5e06347, type: 3}
     hints:
     - afterIdleSeconds: 40
       focus: {fileID: 1869065954}
       line:
-        text: That bin is still burning! The extinguisher hangs on the wall bracket.
-          Point and squeeze.
+        text: That bin is still burning! Take the extinguisher off its wall bracket,
+          aim the hose at the base of the flames, and squeeze.
         clip: {fileID: 8300000, guid: 0193d99c24204244ab62b1c7b782c953, type: 3}
     - afterIdleSeconds: 60
       focus: {fileID: 291716561}
@@ -45070,6 +45923,10 @@ MonoBehaviour:
   - step: {fileID: 1534304437}
     focus: {fileID: 292219113}
     intro: []
+    nextUp:
+    - text: 'Next: the air. The valve and the pressure gauge are on the wall with
+        the big LAB 7 sign. Get that needle into the green.'
+      clip: {fileID: 8300000, guid: 55b857c17082c9742bca0b7911dd4cb5, type: 3}
     hints:
     - afterIdleSeconds: 40
       focus: {fileID: 292219113}
@@ -45101,6 +45958,10 @@ MonoBehaviour:
   - step: {fileID: 1028299520}
     focus: {fileID: 1708465805}
     intro: []
+    nextUp:
+    - text: 'Next: the centrifuge, under its sign by the back wall. Open the lid
+        and fix how those tubes are loaded.'
+      clip: {fileID: 8300000, guid: d3b475cfd9480484e963250dcc8eb0bc, type: 3}
     hints:
     - afterIdleSeconds: 40
       focus: {fileID: 1708465805}
@@ -45114,12 +45975,22 @@ MonoBehaviour:
         text: Every tube needs a partner directly across from it. And one tube escaped.
           It's on the bench.
         clip: {fileID: 8300000, guid: c48caee057960594ba8c28374a23d1b1, type: 3}
+    - afterIdleSeconds: 60
+      focus: {fileID: 1708465805}
+      line:
+        text: Look at the colored rings around the holes. Same color means opposite
+          holes. Fill two matching pairs, then close the lid.
+        clip: {fileID: 8300000, guid: 66740d01e0495e5409ea424c71d6edf9, type: 3}
     solved:
     - text: Perfectly balanced. Unlike whoever loaded it. Not that I saw anything.
       clip: {fileID: 8300000, guid: 53c07b3123ec42140ad5adcf99d43307, type: 3}
   - step: {fileID: 441431056}
-    focus: {fileID: 512044613}
+    focus: {fileID: 521665768}
     intro: []
+    nextUp:
+    - text: 'Next: the spilled samples by the centrifuge. Grab the tongs from the
+        yellow spill kit, then put each vial in the cold storage fridge.'
+      clip: {fileID: 8300000, guid: 55561712a4152bc498440629b3c57591, type: 3}
     hints:
     - afterIdleSeconds: 40
       focus: {fileID: 856688602}
@@ -45148,6 +46019,7 @@ MonoBehaviour:
     - text: Those bolts are manual. The release takes both hands, so whatever you're
         holding... put it down.
       clip: {fileID: 8300000, guid: b6a57212979a8bc4aa0fb3a249f6b1a1, type: 3}
+    nextUp: []
     hints:
     - afterIdleSeconds: 30
       focus: {fileID: 533677446}
@@ -45167,6 +46039,7 @@ MonoBehaviour:
   - text: I'll stay here and write the incident report. I'll leave out who loaded
       the centrifuge.
     clip: {fileID: 8300000, guid: 08e752f8198e2454099a332cdb6c2ecb, type: 3}
+  repeatAfterSeconds: 40
   pressureAlarm:
   - text: And that's the alarm! Close the valve all the way, then try again. Slower.
     clip: {fileID: 8300000, guid: 36a15566f02ba5d48ab1decfcd295a33, type: 3}
@@ -46445,7 +47318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434317248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d02b3585640e9345bb04bec22318e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
   m_Navigation:
@@ -48392,6 +49265,39 @@ Transform:
   - {fileID: 87391068}
   - {fileID: 485636567}
   m_Father: {fileID: 1635555107}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1479935076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1479935077}
+  m_Layer: 0
+  m_Name: 14 Interact Prompt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1479935077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479935076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 775598793}
+  - {fileID: 1295873587}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1482515803
 GameObject:
@@ -57302,6 +58208,7 @@ GameObject:
   - component: {fileID: 1742421574}
   - component: {fileID: 1742421573}
   - component: {fileID: 1742421575}
+  - component: {fileID: 1742421576}
   m_Layer: 0
   m_Name: DeskDrawer_03
   m_TagString: Untagged
@@ -57569,6 +58476,29 @@ MonoBehaviour:
   openAt: 0.08
   insideCenter: {x: 3.3447876, y: 0.30278856, z: -0.31765085}
   insideSize: {x: 0.77868557, y: 0.16192794, z: 0.41133296}
+--- !u!114 &1742421576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742421569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.7
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1745444151
 GameObject:
   m_ObjectHideFlags: 0
@@ -60985,6 +61915,7 @@ GameObject:
   - component: {fileID: 1854555668}
   - component: {fileID: 1854555670}
   - component: {fileID: 1854555669}
+  - component: {fileID: 1854555671}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -61205,6 +62136,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1854555671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854555666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 0.95
+  seconds: 0.6
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1858024247
 GameObject:
   m_ObjectHideFlags: 0
@@ -70436,6 +71390,7 @@ GameObject:
   - component: {fileID: 1956064193}
   - component: {fileID: 1956064195}
   - component: {fileID: 1956064194}
+  - component: {fileID: 1956064196}
   m_Layer: 0
   m_Name: Lid
   m_TagString: Untagged
@@ -70656,6 +71611,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1956064196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956064191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 1
+  seconds: 0.8
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &1958166191
 GameObject:
   m_ObjectHideFlags: 0
@@ -77444,6 +78422,186 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &2047156493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2047156494}
+  - component: {fileID: 2047156496}
+  - component: {fileID: 2047156495}
+  m_Layer: 0
+  m_Name: Housing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2047156494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047156493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
+  m_LocalPosition: {x: -0.02, y: -0.01, z: 0}
+  m_LocalScale: {x: 0.09, y: 0.045, z: 0.16}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031473330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2047156495
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047156493}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c4f69fd163612264db44bbf3fd0da082, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2047156496
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047156493}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2049700147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049700148}
+  - component: {fileID: 2049700150}
+  - component: {fileID: 2049700149}
+  m_Layer: 0
+  m_Name: Lens
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2049700148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049700147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
+  m_LocalPosition: {x: -0.03, y: -0.035, z: 0}
+  m_LocalScale: {x: 0.07, y: 0.006, z: 0.14}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031473330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2049700149
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049700147}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: df36d18176b7f57499de6f56d71913c9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2049700150
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049700147}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2050512622
 GameObject:
   m_ObjectHideFlags: 0
@@ -77807,7 +78965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95ef530d13aba94abaf7bab14e99ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  mainPanel: {fileID: 629450007}
+  mainPanel: {fileID: 399651565}
   settingsScreen: {fileID: 703568759}
   inGameButtons: {fileID: 347491186}
   menuSpot: {fileID: 2076906618}
@@ -79551,6 +80709,7 @@ GameObject:
   - component: {fileID: 2096920769}
   - component: {fileID: 2096920771}
   - component: {fileID: 2096920770}
+  - component: {fileID: 2096920772}
   m_Layer: 0
   m_Name: KitDoor
   m_TagString: Untagged
@@ -79775,6 +80934,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2096920772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096920767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb8eb28341994f42a3ce6d3e9bda4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressToOpen
+  openValue: 0.9
+  seconds: 0.6
+  maxDistance: 3
+  prompt: {fileID: 1479935077}
+  promptText: {fileID: 1295873588}
+  promptScalePerMeter: 0.8
+  openVerb: open
+  closeVerb: close
+  lockedText: LOCKED
+  leftButton: L1
+  rightButton: R1
 --- !u!1 &2098219951
 GameObject:
   m_ObjectHideFlags: 0
@@ -93774,3 +94956,5 @@ SceneRoots:
   - {fileID: 2051332799}
   - {fileID: 1048569730}
   - {fileID: 1529839733}
+  - {fileID: 1479935077}
+  - {fileID: 49308910}

@@ -2,11 +2,9 @@
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-
-
-
 // אובייקט שנשלף לאורך ציר אחד בלבד, בין שני גבולות.
 // יורש מ-XRBaseInteractable: XRI נותן את מחזור החיים, התנועה היא שלנו.
+// אפשר למשוך אותו ביד, או להזיז אותו מקוד דרך SnapTo (למשל PressToOpen, שפותח בלחיצת כפתור).
 [RequireComponent(typeof(Rigidbody))]
 public class ConstrainedSlider : XRBaseInteractable
 {
@@ -21,8 +19,12 @@ public class ConstrainedSlider : XRBaseInteractable
     // מכריז כשנפתח. הפאזל יאזין לזה ולא יצטרך להכיר את המגירה.
     public static event System.Action<ConstrainedSlider> OnOpened;
 
+    // כמה המגירה פתוחה, מ-0 (סגורה) עד 1 (פתוחה לגמרי). אותו רעיון כמו Value של ConstrainedDial.
+    public float Value => maxOffset > minOffset ? (currentOffset - minOffset) / (maxOffset - minOffset) : 0f;
+
     private Vector3 startLocalPosition;
     private float currentOffset;
+    private float appliedOffset;      // המיקום האחרון שנשלח לפיזיקה
     private float grabDelta;          // ההפרש בין היד למגירה ברגע התפיסה
     private bool reportedOpen;
     private Rigidbody body;
@@ -47,15 +49,29 @@ public class ConstrainedSlider : XRBaseInteractable
         grabDelta = currentOffset - ProjectOntoAxis(args.interactorObject.transform.position);
     }
 
-    // XRI קורא לזה בכל פריים, במקום Update.
+    // מזיז את המגירה לערך (0 עד 1) בלי יד.
+    // לא מזיזים כאן: התנועה קורית בצעד הפיזיקה הבא, בדיוק כמו כשמושכים ביד.
+    public void SnapTo(float value)
+    {
+        currentOffset = Mathf.Lerp(minOffset, maxOffset, Mathf.Clamp01(value));
+    }
+
+    // XRI קורא לזה בכל פריים, גם כשאף אחד לא מחזיק, במקום Update.
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
         // Fixed ולא Dynamic: תנועה פיזיקלית חייבת לקרות בקצב של מנוע הפיזיקה
         if (updatePhase != XRInteractionUpdateOrder.UpdatePhase.Fixed) return;
-        if (!isSelected) return;
 
-        float handOnAxis = ProjectOntoAxis(interactorsSelecting[0].transform.position);
-        currentOffset = Mathf.Clamp(handOnAxis + grabDelta, minOffset, maxOffset);
+        // יד מחזיקה: היא קובעת את המיקום. בלי יד: נשאר מה ש-SnapTo קבע.
+        if (isSelected)
+        {
+            float handOnAxis = ProjectOntoAxis(interactorsSelecting[0].transform.position);
+            currentOffset = Mathf.Clamp(handOnAxis + grabDelta, minOffset, maxOffset);
+        }
+
+        // שום דבר לא השתנה: לא שולחים לפיזיקה שוב את אותו מיקום
+        if (Mathf.Approximately(currentOffset, appliedOffset)) return;
+        appliedOffset = currentOffset;
 
         // MovePosition מקבל מיקום עולמי, ולכן ממירים מהמקומי
         Vector3 targetLocal = startLocalPosition + localAxis.normalized * currentOffset;
